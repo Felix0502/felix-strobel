@@ -1215,6 +1215,10 @@
         align-self: center;
     }
 
+    .panel--start .hero__swipe-hint .material-symbols-outlined {
+        color: var(--accent);
+    }
+
     .hero {
         flex-direction: column;
         align-items: flex-start;
@@ -2179,9 +2183,9 @@
     }
 
     .contact-details__content {
-        padding: 180px var(--edge-x-mobile) 100px var(--edge-x-mobile);
+        padding: 100px var(--edge-x-mobile) 100px var(--edge-x-mobile);
         margin-top: 0;
-        justify-content: flex-start;
+        justify-content: center;
         min-height: 100vh;
     }
 
