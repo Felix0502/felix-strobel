@@ -1,3 +1,68 @@
+// Custom smooth scroll function - works consistently across all browsers
+function smoothScrollTo(target, container, direction) {
+	if (!target || !container) return;
+	
+	var duration = 800; // milliseconds
+	var start = Date.now();
+	var isHorizontal = direction === 'horizontal';
+	
+	var startPos, endPos, distance;
+	
+	// Get current scroll position
+	if (isHorizontal) {
+		startPos = container.scrollLeft;
+	} else {
+		startPos = container.scrollTop;
+	}
+	
+	// Calculate target position using getBoundingClientRect for better cross-browser compatibility
+	var targetRect = target.getBoundingClientRect();
+	var containerRect = container.getBoundingClientRect();
+	
+	if (isHorizontal) {
+		endPos = startPos + targetRect.left - containerRect.left;
+	} else {
+		endPos = startPos + targetRect.top - containerRect.top;
+	}
+	
+	distance = endPos - startPos;
+	
+	// If distance is very small, just set position directly
+	if (Math.abs(distance) < 1) {
+		if (isHorizontal) {
+			container.scrollLeft = endPos;
+		} else {
+			container.scrollTop = endPos;
+		}
+		return;
+	}
+	
+	// Easing function (ease-in-out)
+	function easeInOutCubic(t) {
+		return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+	}
+	
+	function scroll() {
+		var now = Date.now();
+		var elapsed = now - start;
+		var progress = Math.min(elapsed / duration, 1);
+		var eased = easeInOutCubic(progress);
+		var currentPos = startPos + (distance * eased);
+		
+		if (isHorizontal) {
+			container.scrollLeft = currentPos;
+		} else {
+			container.scrollTop = currentPos;
+		}
+		
+		if (progress < 1) {
+			requestAnimationFrame(scroll);
+		}
+	}
+	
+	requestAnimationFrame(scroll);
+}
+
 (function () {
 	'use strict';
 
@@ -13,62 +78,6 @@
 				ticking = true;
 			}
 		};
-	}
-
-	// Custom smooth scroll function - works consistently across all browsers
-	function smoothScrollTo(target, container, direction) {
-		if (!target) return;
-		
-		var duration = 800; // milliseconds
-		var start = Date.now();
-		var scrollContainer = container || (direction === 'horizontal' ? document.querySelector('.page-rail') : window);
-		var isHorizontal = direction === 'horizontal';
-		
-		var startPos, endPos, distance;
-		
-		if (isHorizontal) {
-			startPos = scrollContainer.scrollLeft;
-			endPos = target.offsetLeft;
-		} else {
-			if (scrollContainer === window) {
-				startPos = window.pageYOffset || document.documentElement.scrollTop;
-				endPos = target.getBoundingClientRect().top + startPos;
-			} else {
-				startPos = scrollContainer.scrollTop;
-				endPos = target.offsetTop;
-			}
-		}
-		
-		distance = endPos - startPos;
-		
-		// Easing function (ease-in-out)
-		function easeInOutCubic(t) {
-			return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-		}
-		
-		function scroll() {
-			var now = Date.now();
-			var elapsed = now - start;
-			var progress = Math.min(elapsed / duration, 1);
-			var eased = easeInOutCubic(progress);
-			var currentPos = startPos + (distance * eased);
-			
-			if (isHorizontal) {
-				scrollContainer.scrollLeft = currentPos;
-			} else {
-				if (scrollContainer === window) {
-					window.scrollTo(0, currentPos);
-				} else {
-					scrollContainer.scrollTop = currentPos;
-				}
-			}
-			
-			if (progress < 1) {
-				requestAnimationFrame(scroll);
-			}
-		}
-		
-		requestAnimationFrame(scroll);
 	}
 
 	// Custom Cursor - Smooth follow with slight delay
