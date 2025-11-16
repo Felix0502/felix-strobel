@@ -1651,31 +1651,6 @@
 
 @media (max-width: 480px) {
 
-    /* Ensure full viewport height on all mobile browsers */
-    .panel,
-    .hero,
-    .about-section,
-    .about-overview,
-    .projects-overview,
-    .project-section,
-    .interests-content,
-    .interests-gallery,
-    .contact-content,
-    .contact-details,
-    .contact-details__content,
-    .imprint-section {
-        min-height: 100vh;
-        min-height: -webkit-fill-available;
-        min-height: 100dvh;
-    }
-
-    .project-section,
-    .contact-details {
-        height: 100vh;
-        height: -webkit-fill-available;
-        height: 100dvh;
-    }
-
     /* Hero Section Mobile */
     .hero__title {
         font-size: 28px !important;
@@ -1718,8 +1693,6 @@
         gap: 16px;
         justify-content: flex-start;
         min-height: 100vh;
-        min-height: -webkit-fill-available;
-        min-height: 100dvh;
     }
 
     .about-content {
@@ -2210,7 +2183,6 @@
         margin-top: 0;
         justify-content: flex-start;
         min-height: 100vh;
-        min-height: 100dvh;
     }
 
     .contact-details-visual {
@@ -2560,8 +2532,6 @@
     /* Mobile Project Page Styles */
     .project-page-mobile {
         min-height: 100vh;
-        min-height: -webkit-fill-available;
-        min-height: 100dvh;
         background: #ffffff !important;
         padding-bottom: 40px;
         overflow-y: auto;
