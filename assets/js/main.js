@@ -15,6 +15,62 @@
 		};
 	}
 
+	// Custom smooth scroll function - works consistently across all browsers
+	function smoothScrollTo(target, container, direction) {
+		if (!target) return;
+		
+		var duration = 800; // milliseconds
+		var start = Date.now();
+		var scrollContainer = container || (direction === 'horizontal' ? document.querySelector('.page-rail') : window);
+		var isHorizontal = direction === 'horizontal';
+		
+		var startPos, endPos, distance;
+		
+		if (isHorizontal) {
+			startPos = scrollContainer.scrollLeft;
+			endPos = target.offsetLeft;
+		} else {
+			if (scrollContainer === window) {
+				startPos = window.pageYOffset || document.documentElement.scrollTop;
+				endPos = target.getBoundingClientRect().top + startPos;
+			} else {
+				startPos = scrollContainer.scrollTop;
+				endPos = target.offsetTop;
+			}
+		}
+		
+		distance = endPos - startPos;
+		
+		// Easing function (ease-in-out)
+		function easeInOutCubic(t) {
+			return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+		}
+		
+		function scroll() {
+			var now = Date.now();
+			var elapsed = now - start;
+			var progress = Math.min(elapsed / duration, 1);
+			var eased = easeInOutCubic(progress);
+			var currentPos = startPos + (distance * eased);
+			
+			if (isHorizontal) {
+				scrollContainer.scrollLeft = currentPos;
+			} else {
+				if (scrollContainer === window) {
+					window.scrollTo(0, currentPos);
+				} else {
+					scrollContainer.scrollTop = currentPos;
+				}
+			}
+			
+			if (progress < 1) {
+				requestAnimationFrame(scroll);
+			}
+		}
+		
+		requestAnimationFrame(scroll);
+	}
+
 	// Custom Cursor - Smooth follow with slight delay
 	var cursorDot = document.querySelector('.custom-cursor-dot');
 	
@@ -77,7 +133,7 @@
 		return links.find(function (a) { return a.getAttribute('data-target') === id; }) || null;
 	}
 
-	// Click → scrollIntoView
+	// Click → smooth scroll
 	links.forEach(function (a) {
 		a.addEventListener('click', function (e) {
 			e.preventDefault();
@@ -88,16 +144,16 @@
 			// If clicking on "projects" link, scroll to the top of projects panel first
 			if (targetId === 'projects') {
 				// Scroll horizontally to projects panel
-				target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+				smoothScrollTo(target, document.querySelector('.page-rail'), 'horizontal');
 				// Then scroll to top of the projects intro section
 				setTimeout(function() {
 					var projectsIntro = document.querySelector('.projects-intro');
 					if (projectsIntro) {
-						projectsIntro.scrollIntoView({ behavior: 'smooth', block: 'start' });
+						smoothScrollTo(projectsIntro, document.querySelector('.panel--projects'), 'vertical');
 					}
-				}, 500);
+				}, 900);
 			} else {
-			target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+				smoothScrollTo(target, document.querySelector('.page-rail'), 'horizontal');
 			}
 		});
 	});
@@ -110,14 +166,14 @@
 			var projectsPanel = document.getElementById('projects');
 			if (projectsPanel) {
 				// Scroll horizontally to projects panel
-				projectsPanel.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+				smoothScrollTo(projectsPanel, document.querySelector('.page-rail'), 'horizontal');
 				// Then scroll to top of the projects intro section
 				setTimeout(function() {
 					var projectsIntro = document.querySelector('.projects-intro');
 					if (projectsIntro) {
-						projectsIntro.scrollIntoView({ behavior: 'smooth', block: 'start' });
+						smoothScrollTo(projectsIntro, document.querySelector('.panel--projects'), 'vertical');
 					}
-				}, 500);
+				}, 900);
 			}
 		});
 	}
@@ -128,7 +184,7 @@
 			e.preventDefault();
 			var projectsPanel = document.getElementById('projects');
 			if (projectsPanel) {
-				projectsPanel.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+				smoothScrollTo(projectsPanel, document.querySelector('.page-rail'), 'horizontal');
 			}
 		});
 	}
@@ -176,11 +232,13 @@
 	nav.addEventListener('keydown', function (e) {
 		if (e.key === 'Home') {
 			e.preventDefault();
-			document.getElementById('start')?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+			var startPanel = document.getElementById('start');
+			if (startPanel) smoothScrollTo(startPanel, document.querySelector('.page-rail'), 'horizontal');
 		}
 		if (e.key === 'End') {
 			e.preventDefault();
-			document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+			var contactPanel = document.getElementById('contact');
+			if (contactPanel) smoothScrollTo(contactPanel, document.querySelector('.page-rail'), 'horizontal');
 		}
 	});
 
@@ -201,7 +259,7 @@
 				// On desktop, scroll to project section as before
 				var targetElement = document.getElementById(targetId);
 				if (targetElement) {
-					targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					smoothScrollTo(targetElement, document.querySelector('.panel--projects'), 'vertical');
 				}
 			}
 		});
@@ -226,7 +284,7 @@
 				// On desktop, scroll to project section as before
 				var targetElement = document.getElementById('project-' + projectNum);
 				if (targetElement) {
-					targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					smoothScrollTo(targetElement, document.querySelector('.panel--projects'), 'vertical');
 				}
 			}
 		});
@@ -250,7 +308,7 @@
 				var projectNum = thumbnail.getAttribute('data-project');
 				var targetElement = document.getElementById('project-' + projectNum);
 				if (targetElement) {
-					targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					smoothScrollTo(targetElement, document.querySelector('.panel--projects'), 'vertical');
 				}
 			}
 		});
@@ -263,7 +321,7 @@
 			var targetId = this.getAttribute('data-scroll-to');
 			var targetElement = document.getElementById(targetId);
 			if (targetElement) {
-				targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				smoothScrollTo(targetElement, document.querySelector('.panel--about'), 'vertical');
 			}
 		});
 	}
@@ -275,7 +333,7 @@
 			var targetId = this.getAttribute('data-scroll-to');
 			var targetElement = document.getElementById(targetId);
 			if (targetElement) {
-				targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				smoothScrollTo(targetElement, document.querySelector('.panel--about'), 'vertical');
 			}
 		});
 	}
@@ -287,7 +345,7 @@
 			var targetId = this.getAttribute('data-scroll-to');
 			var targetElement = document.getElementById(targetId);
 			if (targetElement) {
-				targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				smoothScrollTo(targetElement, document.querySelector('.panel--about'), 'vertical');
 			}
 		});
 	}
@@ -299,7 +357,7 @@
 			var targetId = this.getAttribute('data-scroll-to');
 			var targetElement = document.getElementById(targetId);
 			if (targetElement) {
-				targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				smoothScrollTo(targetElement, document.querySelector('.panel--interests'), 'vertical');
 			}
 		});
 	}
@@ -342,7 +400,7 @@
 				// Scroll to next project
 				if (currentIndex >= 0 && currentIndex < projectSections.length - 1) {
 					var nextSection = projectSections[currentIndex + 1];
-					nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					smoothScrollTo(nextSection, document.querySelector('.panel--projects'), 'vertical');
 				}
 			}
 		});
@@ -357,7 +415,7 @@
 				// Scroll to about intro section (back to top)
 				var aboutIntro = document.querySelector('.about-intro');
 				if (aboutIntro) {
-					aboutIntro.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					smoothScrollTo(aboutIntro, document.querySelector('.panel--about'), 'vertical');
 				}
 				return;
 			}
@@ -367,7 +425,7 @@
 				// Scroll to interests content section (back to top)
 				var interestsContent = document.querySelector('.interests-content');
 				if (interestsContent) {
-					interestsContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					smoothScrollTo(interestsContent, document.querySelector('.panel--interests'), 'vertical');
 				}
 				return;
 			}
@@ -377,7 +435,7 @@
 				// Scroll to contact content section (back to top)
 				var contactContent = document.querySelector('.contact-content');
 				if (contactContent) {
-					contactContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					smoothScrollTo(contactContent, document.querySelector('.panel--contact'), 'vertical');
 				}
 				return;
 			}
@@ -397,12 +455,12 @@
 			// Scroll to previous project or back to overview
 			if (currentIndex > 0) {
 				var prevSection = projectSections[currentIndex - 1];
-				prevSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				smoothScrollTo(prevSection, document.querySelector('.panel--projects'), 'vertical');
 			} else if (currentIndex === 0) {
 				// Go back to projects overview
 				var projectsIntro = document.querySelector('.projects-intro');
 				if (projectsIntro) {
-					projectsIntro.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					smoothScrollTo(projectsIntro, document.querySelector('.panel--projects'), 'vertical');
 				}
 			}
 		});
@@ -714,19 +772,19 @@ document.addEventListener('DOMContentLoaded', function() {
 				// Scroll to about intro section
 				var aboutIntro = document.querySelector('.about-intro');
 				if (aboutIntro) {
-					aboutIntro.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					smoothScrollTo(aboutIntro, document.querySelector('.panel--about'), 'vertical');
 				}
 			} else if (navbar.classList.contains('in-interests')) {
 				// Scroll to interests content section
 				var interestsContent = document.querySelector('.interests-content');
 				if (interestsContent) {
-					interestsContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					smoothScrollTo(interestsContent, document.querySelector('.panel--interests'), 'vertical');
 				}
 			} else if (navbar.classList.contains('in-contact')) {
 				// Scroll to contact content section
 				var contactContent = document.querySelector('.contact-content');
 				if (contactContent) {
-					contactContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					smoothScrollTo(contactContent, document.querySelector('.panel--contact'), 'vertical');
 				}
 			}
 		});
@@ -742,7 +800,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			var targetId = this.getAttribute('data-scroll-to');
 			var targetElement = document.getElementById(targetId);
 			if (targetElement) {
-				targetElement.scrollIntoView({ behavior: 'smooth' });
+				smoothScrollTo(targetElement, document.querySelector('.panel--interests'), 'vertical');
 			}
 		});
 	});
@@ -823,7 +881,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			var targetId = this.getAttribute('data-scroll-to');
 			var targetElement = document.getElementById(targetId);
 			if (targetElement) {
-				targetElement.scrollIntoView({ behavior: 'smooth' });
+				smoothScrollTo(targetElement, document.querySelector('.panel--contact'), 'vertical');
 			}
 		});
 	}
@@ -836,7 +894,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			var targetId = this.getAttribute('data-scroll-to');
 			var targetElement = document.getElementById(targetId);
 			if (targetElement) {
-				targetElement.scrollIntoView({ behavior: 'smooth' });
+				smoothScrollTo(targetElement, document.querySelector('.panel--contact'), 'vertical');
 			}
 		});
 	}

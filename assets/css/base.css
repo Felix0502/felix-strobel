@@ -34,7 +34,7 @@ body,
 }
 
 html:focus-within {
-    scroll-behavior: smooth;
+    /* Removed scroll-behavior: smooth to use custom scroll implementation */
 }
 
 body {

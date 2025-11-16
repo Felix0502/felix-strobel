@@ -6,7 +6,6 @@
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
     min-height: 100svh;
     height: 100vh;
     -webkit-overflow-scrolling: touch;
@@ -24,7 +23,6 @@
     overflow-y: auto;
     height: 100vh;
     scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
 }
 
 /* Start with bg-alt on first, then alternate */
@@ -389,7 +387,17 @@
         font-size: 32px;
     }
 
-    /* Project Section Mobile */
+    /* Project Section Mobile - disable snap scrolling */
+    .panel--projects,
+    .panel--about,
+    .panel--interests,
+    .panel--contact,
+    .about-section,
+    .interests-gallery,
+    .contact-details {
+        scroll-snap-type: none;
+    }
+
     .project-section {
         height: 100vh;
     }
