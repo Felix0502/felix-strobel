@@ -337,6 +337,7 @@
     overflow-y: auto;
     height: 100vh;
     scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
 }
 
 .about-intro {
@@ -375,10 +376,11 @@
 .about-image {
     width: calc((100vw - 160px - 96px) / 5);
     aspect-ratio: 1;
-    background: #E0E0E0;
+    object-fit: cover;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    display: block;
 }
 
 .about-btn {

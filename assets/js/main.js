@@ -1,68 +1,3 @@
-// Custom smooth scroll function - works consistently across all browsers
-function smoothScrollTo(target, container, direction) {
-	if (!target || !container) return;
-	
-	var duration = 800; // milliseconds
-	var start = Date.now();
-	var isHorizontal = direction === 'horizontal';
-	
-	var startPos, endPos, distance;
-	
-	// Get current scroll position
-	if (isHorizontal) {
-		startPos = container.scrollLeft;
-	} else {
-		startPos = container.scrollTop;
-	}
-	
-	// Calculate target position using getBoundingClientRect for better cross-browser compatibility
-	var targetRect = target.getBoundingClientRect();
-	var containerRect = container.getBoundingClientRect();
-	
-	if (isHorizontal) {
-		endPos = startPos + targetRect.left - containerRect.left;
-	} else {
-		endPos = startPos + targetRect.top - containerRect.top;
-	}
-	
-	distance = endPos - startPos;
-	
-	// If distance is very small, just set position directly
-	if (Math.abs(distance) < 1) {
-		if (isHorizontal) {
-			container.scrollLeft = endPos;
-		} else {
-			container.scrollTop = endPos;
-		}
-		return;
-	}
-	
-	// Easing function (ease-in-out)
-	function easeInOutCubic(t) {
-		return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-	}
-	
-	function scroll() {
-		var now = Date.now();
-		var elapsed = now - start;
-		var progress = Math.min(elapsed / duration, 1);
-		var eased = easeInOutCubic(progress);
-		var currentPos = startPos + (distance * eased);
-		
-		if (isHorizontal) {
-			container.scrollLeft = currentPos;
-		} else {
-			container.scrollTop = currentPos;
-		}
-		
-		if (progress < 1) {
-			requestAnimationFrame(scroll);
-		}
-	}
-	
-	requestAnimationFrame(scroll);
-}
-
 (function () {
 	'use strict';
 
@@ -142,7 +77,7 @@ function smoothScrollTo(target, container, direction) {
 		return links.find(function (a) { return a.getAttribute('data-target') === id; }) || null;
 	}
 
-	// Click → smooth scroll
+	// Click → scrollIntoView
 	links.forEach(function (a) {
 		a.addEventListener('click', function (e) {
 			e.preventDefault();
@@ -153,16 +88,16 @@ function smoothScrollTo(target, container, direction) {
 			// If clicking on "projects" link, scroll to the top of projects panel first
 			if (targetId === 'projects') {
 				// Scroll horizontally to projects panel
-				smoothScrollTo(target, document.querySelector('.page-rail'), 'horizontal');
+				target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
 				// Then scroll to top of the projects intro section
 				setTimeout(function() {
 					var projectsIntro = document.querySelector('.projects-intro');
 					if (projectsIntro) {
-						smoothScrollTo(projectsIntro, document.querySelector('.panel--projects'), 'vertical');
+						projectsIntro.scrollIntoView({ behavior: 'smooth', block: 'start' });
 					}
-				}, 900);
+				}, 500);
 			} else {
-				smoothScrollTo(target, document.querySelector('.page-rail'), 'horizontal');
+			target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
 			}
 		});
 	});
@@ -175,14 +110,14 @@ function smoothScrollTo(target, container, direction) {
 			var projectsPanel = document.getElementById('projects');
 			if (projectsPanel) {
 				// Scroll horizontally to projects panel
-				smoothScrollTo(projectsPanel, document.querySelector('.page-rail'), 'horizontal');
+				projectsPanel.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
 				// Then scroll to top of the projects intro section
 				setTimeout(function() {
 					var projectsIntro = document.querySelector('.projects-intro');
 					if (projectsIntro) {
-						smoothScrollTo(projectsIntro, document.querySelector('.panel--projects'), 'vertical');
+						projectsIntro.scrollIntoView({ behavior: 'smooth', block: 'start' });
 					}
-				}, 900);
+				}, 500);
 			}
 		});
 	}
@@ -193,7 +128,7 @@ function smoothScrollTo(target, container, direction) {
 			e.preventDefault();
 			var projectsPanel = document.getElementById('projects');
 			if (projectsPanel) {
-				smoothScrollTo(projectsPanel, document.querySelector('.page-rail'), 'horizontal');
+				projectsPanel.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
 			}
 		});
 	}
@@ -241,13 +176,11 @@ function smoothScrollTo(target, container, direction) {
 	nav.addEventListener('keydown', function (e) {
 		if (e.key === 'Home') {
 			e.preventDefault();
-			var startPanel = document.getElementById('start');
-			if (startPanel) smoothScrollTo(startPanel, document.querySelector('.page-rail'), 'horizontal');
+			document.getElementById('start')?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
 		}
 		if (e.key === 'End') {
 			e.preventDefault();
-			var contactPanel = document.getElementById('contact');
-			if (contactPanel) smoothScrollTo(contactPanel, document.querySelector('.page-rail'), 'horizontal');
+			document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
 		}
 	});
 
@@ -268,7 +201,7 @@ function smoothScrollTo(target, container, direction) {
 				// On desktop, scroll to project section as before
 				var targetElement = document.getElementById(targetId);
 				if (targetElement) {
-					smoothScrollTo(targetElement, document.querySelector('.panel--projects'), 'vertical');
+					targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				}
 			}
 		});
@@ -293,7 +226,7 @@ function smoothScrollTo(target, container, direction) {
 				// On desktop, scroll to project section as before
 				var targetElement = document.getElementById('project-' + projectNum);
 				if (targetElement) {
-					smoothScrollTo(targetElement, document.querySelector('.panel--projects'), 'vertical');
+					targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				}
 			}
 		});
@@ -317,7 +250,7 @@ function smoothScrollTo(target, container, direction) {
 				var projectNum = thumbnail.getAttribute('data-project');
 				var targetElement = document.getElementById('project-' + projectNum);
 				if (targetElement) {
-					smoothScrollTo(targetElement, document.querySelector('.panel--projects'), 'vertical');
+					targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				}
 			}
 		});
@@ -330,7 +263,7 @@ function smoothScrollTo(target, container, direction) {
 			var targetId = this.getAttribute('data-scroll-to');
 			var targetElement = document.getElementById(targetId);
 			if (targetElement) {
-				smoothScrollTo(targetElement, document.querySelector('.panel--about'), 'vertical');
+				targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 			}
 		});
 	}
@@ -342,7 +275,7 @@ function smoothScrollTo(target, container, direction) {
 			var targetId = this.getAttribute('data-scroll-to');
 			var targetElement = document.getElementById(targetId);
 			if (targetElement) {
-				smoothScrollTo(targetElement, document.querySelector('.panel--about'), 'vertical');
+				targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 			}
 		});
 	}
@@ -354,7 +287,7 @@ function smoothScrollTo(target, container, direction) {
 			var targetId = this.getAttribute('data-scroll-to');
 			var targetElement = document.getElementById(targetId);
 			if (targetElement) {
-				smoothScrollTo(targetElement, document.querySelector('.panel--about'), 'vertical');
+				targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 			}
 		});
 	}
@@ -366,7 +299,7 @@ function smoothScrollTo(target, container, direction) {
 			var targetId = this.getAttribute('data-scroll-to');
 			var targetElement = document.getElementById(targetId);
 			if (targetElement) {
-				smoothScrollTo(targetElement, document.querySelector('.panel--interests'), 'vertical');
+				targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 			}
 		});
 	}
@@ -409,7 +342,7 @@ function smoothScrollTo(target, container, direction) {
 				// Scroll to next project
 				if (currentIndex >= 0 && currentIndex < projectSections.length - 1) {
 					var nextSection = projectSections[currentIndex + 1];
-					smoothScrollTo(nextSection, document.querySelector('.panel--projects'), 'vertical');
+					nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				}
 			}
 		});
@@ -424,7 +357,7 @@ function smoothScrollTo(target, container, direction) {
 				// Scroll to about intro section (back to top)
 				var aboutIntro = document.querySelector('.about-intro');
 				if (aboutIntro) {
-					smoothScrollTo(aboutIntro, document.querySelector('.panel--about'), 'vertical');
+					aboutIntro.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				}
 				return;
 			}
@@ -434,7 +367,7 @@ function smoothScrollTo(target, container, direction) {
 				// Scroll to interests content section (back to top)
 				var interestsContent = document.querySelector('.interests-content');
 				if (interestsContent) {
-					smoothScrollTo(interestsContent, document.querySelector('.panel--interests'), 'vertical');
+					interestsContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				}
 				return;
 			}
@@ -444,7 +377,7 @@ function smoothScrollTo(target, container, direction) {
 				// Scroll to contact content section (back to top)
 				var contactContent = document.querySelector('.contact-content');
 				if (contactContent) {
-					smoothScrollTo(contactContent, document.querySelector('.panel--contact'), 'vertical');
+					contactContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				}
 				return;
 			}
@@ -464,12 +397,12 @@ function smoothScrollTo(target, container, direction) {
 			// Scroll to previous project or back to overview
 			if (currentIndex > 0) {
 				var prevSection = projectSections[currentIndex - 1];
-				smoothScrollTo(prevSection, document.querySelector('.panel--projects'), 'vertical');
+				prevSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 			} else if (currentIndex === 0) {
 				// Go back to projects overview
 				var projectsIntro = document.querySelector('.projects-intro');
 				if (projectsIntro) {
-					smoothScrollTo(projectsIntro, document.querySelector('.panel--projects'), 'vertical');
+					projectsIntro.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				}
 			}
 		});
@@ -781,19 +714,19 @@ document.addEventListener('DOMContentLoaded', function() {
 				// Scroll to about intro section
 				var aboutIntro = document.querySelector('.about-intro');
 				if (aboutIntro) {
-					smoothScrollTo(aboutIntro, document.querySelector('.panel--about'), 'vertical');
+					aboutIntro.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				}
 			} else if (navbar.classList.contains('in-interests')) {
 				// Scroll to interests content section
 				var interestsContent = document.querySelector('.interests-content');
 				if (interestsContent) {
-					smoothScrollTo(interestsContent, document.querySelector('.panel--interests'), 'vertical');
+					interestsContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				}
 			} else if (navbar.classList.contains('in-contact')) {
 				// Scroll to contact content section
 				var contactContent = document.querySelector('.contact-content');
 				if (contactContent) {
-					smoothScrollTo(contactContent, document.querySelector('.panel--contact'), 'vertical');
+					contactContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
 				}
 			}
 		});
@@ -809,7 +742,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			var targetId = this.getAttribute('data-scroll-to');
 			var targetElement = document.getElementById(targetId);
 			if (targetElement) {
-				smoothScrollTo(targetElement, document.querySelector('.panel--interests'), 'vertical');
+				targetElement.scrollIntoView({ behavior: 'smooth' });
 			}
 		});
 	});
@@ -890,7 +823,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			var targetId = this.getAttribute('data-scroll-to');
 			var targetElement = document.getElementById(targetId);
 			if (targetElement) {
-				smoothScrollTo(targetElement, document.querySelector('.panel--contact'), 'vertical');
+				targetElement.scrollIntoView({ behavior: 'smooth' });
 			}
 		});
 	}
@@ -903,7 +836,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			var targetId = this.getAttribute('data-scroll-to');
 			var targetElement = document.getElementById(targetId);
 			if (targetElement) {
-				smoothScrollTo(targetElement, document.querySelector('.panel--contact'), 'vertical');
+				targetElement.scrollIntoView({ behavior: 'smooth' });
 			}
 		});
 	}
