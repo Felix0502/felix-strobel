@@ -126,6 +126,13 @@ label {
 
 /* Mobile optimizations for base elements */
 @media (max-width: 480px) {
+    html,
+    body {
+        height: 100vh;
+        height: -webkit-fill-available;
+        height: 100dvh;
+    }
+
     body {
         cursor: auto;
         -webkit-tap-highlight-color: rgba(0, 19, 230, 0.1);

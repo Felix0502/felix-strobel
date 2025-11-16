@@ -459,6 +459,7 @@
     aspect-ratio: 16 / 9;
     background: #E0E0E0;
     margin-bottom: 40px;
+    border-radius: 4px;
 }
 
 .about-details .hero__title {
@@ -682,6 +683,7 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    border-radius: 4px;
 }
 
 /* Project Hero Video */
@@ -690,7 +692,7 @@
     aspect-ratio: 16 / 9;
     background: #E0E0E0;
     margin-bottom: 40px;
-    border-radius: var(--radius-1);
+    border-radius: 4px;
     overflow: hidden;
 }
 
@@ -698,6 +700,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 4px;
 }
 
 /* Project Title */
@@ -819,6 +822,7 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    border-radius: 4px;
 }
 
 .project__slide-image video,
@@ -827,6 +831,7 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    border-radius: 4px;
 }
 
 /* Plugin slider section with specific 768x432 aspect ratio */
@@ -1338,6 +1343,7 @@
     opacity: 0.1;
     transition: opacity 0.3s ease;
     cursor: pointer;
+    border-radius: 4px;
 }
 
 .interests-image.highlighted {
@@ -1375,7 +1381,7 @@
     position: relative;
     aspect-ratio: 4 / 3;
     overflow: hidden;
-    border-radius: 0;
+    border-radius: 4px;
 }
 
 .interests-gallery__image {
@@ -1384,6 +1390,7 @@
     object-fit: cover;
     display: block;
     transition: transform 0.3s ease;
+    border-radius: 4px;
 }
 
 .interests-gallery__overlay {
@@ -1430,6 +1437,7 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+    border-radius: 4px;
 }
 
 .contact-btn {
@@ -1506,6 +1514,7 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+    border-radius: 4px;
 }
 
 /* ===================================== */
@@ -1638,6 +1647,31 @@
 
 @media (max-width: 480px) {
 
+    /* Ensure full viewport height on all mobile browsers */
+    .panel,
+    .hero,
+    .about-section,
+    .about-overview,
+    .projects-overview,
+    .project-section,
+    .interests-content,
+    .interests-gallery,
+    .contact-content,
+    .contact-details,
+    .contact-details__content,
+    .imprint-section {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+        min-height: 100dvh;
+    }
+
+    .project-section,
+    .contact-details {
+        height: 100vh;
+        height: -webkit-fill-available;
+        height: 100dvh;
+    }
+
     /* Hero Section Mobile */
     .hero__title {
         font-size: 28px !important;
@@ -1665,6 +1699,11 @@
     /* About Section Mobile */
     .about-section {
         scroll-snap-align: none;
+    }
+
+    .snap-section {
+        scroll-snap-align: none;
+        scroll-snap-stop: normal;
     }
 
     .about-overview {
@@ -2009,10 +2048,20 @@
     }
 
     /* Interests Section Mobile */
+    .panel--interests {
+        scroll-snap-type: none;
+    }
+
+    .interests-gallery {
+        scroll-snap-align: none;
+        scroll-snap-type: none;
+    }
+
     .interests-content {
         padding: 120px var(--edge-x-mobile) 0 var(--edge-x-mobile);
         gap: 16px;
         justify-content: flex-start;
+        scroll-snap-align: none;
     }
 
     .interests-grid {
@@ -2064,10 +2113,19 @@
     }
 
     /* Contact Section Mobile */
+    .panel--contact {
+        scroll-snap-type: none;
+    }
+
+    .contact-details {
+        scroll-snap-type: none;
+    }
+
     .contact-content {
         padding: 100px var(--edge-x-mobile) 80px var(--edge-x-mobile);
         align-items: center;
         justify-content: center;
+        scroll-snap-align: none;
     }
     
     .contact-content .hero__title {
@@ -2140,6 +2198,7 @@
 
     .imprint-section {
         padding: 60px var(--edge-x-mobile);
+        scroll-snap-align: none;
     }
 
     .imprint-content .hero__title {
@@ -2451,6 +2510,8 @@
     /* Mobile Project Page Styles */
     .project-page-mobile {
         min-height: 100vh;
+        min-height: -webkit-fill-available;
+        min-height: 100dvh;
         background: var(--bg);
         padding-bottom: 40px;
         overflow-y: auto;

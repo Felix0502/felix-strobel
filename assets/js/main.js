@@ -631,16 +631,36 @@ function nextSlide(button) {
 				}
 			});
 			
-			// Play video in the new first slide (100% opacity)
-			var newFirstSlide = imagesContainer.querySelector('.project__slide:first-child');
-			if (newFirstSlide) {
-				var video = newFirstSlide.querySelector('video');
-				if (video) {
-					video.play();
+		// Play video in the new first slide (100% opacity)
+		var newFirstSlide = imagesContainer.querySelector('.project__slide:first-child');
+		if (newFirstSlide) {
+			var video = newFirstSlide.querySelector('video');
+			if (video) {
+				video.play();
+			}
+			
+			// On mobile, expand the new first slide's description by default
+			var isMobile = window.innerWidth <= 480;
+			if (isMobile) {
+				// First, remove expanded class from all slides
+				slides.forEach(function(slide) {
+					var title = slide.querySelector('.project__slide-title');
+					var desc = slide.querySelector('.project__slide-description');
+					if (title) title.classList.remove('expanded');
+					if (desc) desc.classList.remove('expanded');
+				});
+				
+				// Then add expanded class to the new first slide
+				var titleElement = newFirstSlide.querySelector('.project__slide-title');
+				var description = newFirstSlide.querySelector('.project__slide-description');
+				if (titleElement && description) {
+					titleElement.classList.add('expanded');
+					description.classList.add('expanded');
 				}
 			}
-		}, 50);
-	}, 500);
+		}
+	}, 50);
+}, 500);
 }
 
 // Initialize arrow position on page load
@@ -669,12 +689,23 @@ window.addEventListener('load', function() {
 				}
 			});
 			
-			// Only play the video in the first slide
-			var firstVideo = firstSlide.querySelector('video');
-			if (firstVideo) {
-				firstVideo.play();
+		// Only play the video in the first slide
+		var firstVideo = firstSlide.querySelector('video');
+		if (firstVideo) {
+			firstVideo.play();
+		}
+		
+		// On mobile, expand the first slide's description by default
+		var isMobile = window.innerWidth <= 480;
+		if (isMobile) {
+			var titleElement = firstSlide.querySelector('.project__slide-title');
+			var description = firstSlide.querySelector('.project__slide-description');
+			if (titleElement && description) {
+				titleElement.classList.add('expanded');
+				description.classList.add('expanded');
 			}
 		}
+	}
 	});
 });
 
@@ -931,14 +962,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// Toggle slide descriptions
 	document.addEventListener('click', function(e) {
-		// Check if clicking on slide title
-		if (e.target.classList.contains('project__slide-title') || e.target.closest('.project__slide-title')) {
-			var titleElement = e.target.classList.contains('project__slide-title') ? e.target : e.target.closest('.project__slide-title');
+		// Check if clicking on slide title or title toggle
+		if (e.target.classList.contains('project__slide-title') || 
+		    e.target.closest('.project__slide-title') ||
+		    e.target.classList.contains('project__slide-title-toggle')) {
+			
+			var titleElement;
+			if (e.target.classList.contains('project__slide-title')) {
+				titleElement = e.target;
+			} else if (e.target.classList.contains('project__slide-title-toggle')) {
+				titleElement = e.target.parentElement;
+			} else {
+				titleElement = e.target.closest('.project__slide-title');
+			}
+			
 			var description = titleElement.nextElementSibling;
 			
 			if (description && description.classList.contains('project__slide-description')) {
 				titleElement.classList.toggle('expanded');
 				description.classList.toggle('expanded');
+				e.stopPropagation(); // Prevent slide click handler from firing
 			}
 		}
 		// Check if clicking on active slide (but not on title or description)
@@ -947,8 +990,9 @@ document.addEventListener('DOMContentLoaded', function() {
 			var slider = slideElement.closest('.project__slider');
 			var firstSlide = slider ? slider.querySelector('.project__slide:first-child') : null;
 			
-			// Only toggle if this is the active (first) slide
-			if (slideElement === firstSlide) {
+			// Only toggle if this is the active (first) slide and on desktop
+			var isMobile = window.innerWidth <= 480;
+			if (slideElement === firstSlide && !isMobile) {
 				var titleElement = slideElement.querySelector('.project__slide-title');
 				var description = slideElement.querySelector('.project__slide-description');
 				

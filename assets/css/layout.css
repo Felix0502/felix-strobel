@@ -352,6 +352,7 @@
 
     .panel {
         min-height: 100vh;
+        min-height: -webkit-fill-available;
         min-height: 100dvh;
     }
 
@@ -362,6 +363,7 @@
         padding-top: 100px;
         padding-bottom: 40px;
         min-height: 100vh;
+        min-height: -webkit-fill-available;
         min-height: 100dvh;
         gap: 24px;
     }
@@ -376,11 +378,13 @@
     /* About Section Mobile */
     .about-section {
         min-height: 100vh;
+        min-height: -webkit-fill-available;
         min-height: 100dvh;
     }
 
     .about-overview {
         min-height: 100vh;
+        min-height: -webkit-fill-available;
         min-height: 100dvh;
     }
 
@@ -406,11 +410,13 @@
 
     .project-section {
         height: 100vh;
+        height: -webkit-fill-available;
         height: 100dvh;
     }
 
     .projects-overview {
         min-height: 100vh;
+        min-height: -webkit-fill-available;
         min-height: 100dvh;
         padding-top: 100px;
         padding-bottom: 40px;
@@ -432,11 +438,13 @@
     /* Contact Section Mobile */
     .contact-details {
         height: 100vh;
+        height: -webkit-fill-available;
         height: 100dvh;
     }
 
     .contact-details__content {
         min-height: 100vh;
+        min-height: -webkit-fill-available;
         min-height: 100dvh;
         padding-top: 100px;
     }
@@ -444,6 +452,7 @@
     /* Imprint Section Mobile */
     .imprint-section {
         min-height: 100vh;
+        min-height: -webkit-fill-available;
         min-height: 100dvh;
         padding: 60px var(--edge-x-mobile) 100px var(--edge-x-mobile);
     }
