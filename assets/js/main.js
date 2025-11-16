@@ -304,6 +304,18 @@
 		});
 	}
 
+	// Contact info (mobile) - scroll to details
+	var contactInfo = document.querySelector('.contact-info');
+	if (contactInfo) {
+		contactInfo.addEventListener('click', function() {
+			var targetId = this.getAttribute('data-scroll-to');
+			var targetElement = document.getElementById(targetId);
+			if (targetElement) {
+				targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}
+		});
+	}
+
 	// About CTA button - navigate to contact
 	var aboutCta = document.querySelector('.about-details__cta');
 	if (aboutCta) {
