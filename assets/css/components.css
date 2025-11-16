@@ -1739,7 +1739,7 @@
         width: 100%;
         max-width: 100%;
         aspect-ratio: 1;
-        margin: 0;
+        margin: 16px 0 0 0;
     }
 
     .about-info {
