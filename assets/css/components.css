@@ -1715,7 +1715,7 @@
 
     .about-overview {
         padding: 120px var(--edge-x-mobile) 0 var(--edge-x-mobile);
-        gap: 16px;
+        gap: 0;
         justify-content: flex-start;
     }
 
