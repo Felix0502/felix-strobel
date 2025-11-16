@@ -1,0 +1,59 @@
+/* Co-Worker Project Specific Styles */
+
+/* Plugin slider images with 432x768 aspect ratio (portrait format) using img tags */
+#project-coworker .project__slide-image--plugin {
+    aspect-ratio: 432 / 768 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: hidden;
+    background: #E0E0E0;
+    border-radius: var(--radius-1);
+}
+
+#project-coworker .project__slide-image--plugin img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Make plugin slider slides smaller */
+#project-coworker .project__slider--plugin .project__slide {
+    width: calc(28% - 12px) !important;
+}
+
+/* Adjust navigation position for smaller slides */
+#project-coworker .project__slider-section--plugin-format .project__slider-nav {
+    left: calc(28% + 24px) !important;
+}
+
+/* Mobile Optimizations for Co-Worker Project */
+@media (max-width: 480px) {
+
+    /* Plugin slider slides on mobile */
+    #project-coworker .project__slider--plugin .project__slide {
+        width: calc(60% - 12px) !important;
+    }
+
+    /* Adjust navigation position for mobile */
+    #project-coworker .project__slider-section--plugin-format .project__slider-nav {
+        left: calc(60% + 12px) !important;
+    }
+
+    /* Plugin slider images maintain aspect ratio on mobile - same as desktop */
+    #project-coworker .project__slide-image--plugin {
+        aspect-ratio: 432 / 768 !important;
+        width: 100% !important;
+        height: auto !important;
+        overflow: hidden;
+        background: #E0E0E0;
+        border-radius: var(--radius-1);
+    }
+
+    #project-coworker .project__slide-image--plugin img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}

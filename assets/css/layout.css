@@ -1,0 +1,431 @@
+.page-rail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100vw;
+    gap: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    min-height: 100svh;
+    height: 100vh;
+    -webkit-overflow-scrolling: touch;
+}
+
+.panel {
+    min-height: 100svh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    outline: none;
+    overflow-y: hidden;
+}
+
+.panel--projects {
+    overflow-y: auto;
+    height: 100vh;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+/* Start with bg-alt on first, then alternate */
+.panel--start,
+.panel--about,
+.panel--contact {
+    background: var(--bg-alt);
+}
+
+.panel--projects,
+.panel--interests {
+    background: var(--bg);
+}
+
+.site-nav--bottom {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: none;
+    border-radius: 999px;
+    margin: 0 80px 32px 80px;
+    width: calc(100% - 160px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    transition: background-color 0.3s ease;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+}
+
+.site-nav--bottom.scrolled {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: none;
+    border-radius: 999px;
+    margin: 0 80px 32px 80px;
+    width: calc(100% - 160px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    will-change: transform, opacity;
+    transform: translateZ(0);
+}
+
+.site-nav--bottom.scrolled::before {
+    display: none;
+}
+
+.site-nav--bottom.scrolled .site-nav__inner {
+    padding-left: 24px;
+    padding-right: 32px;
+}
+
+.site-nav--bottom.scrolled .site-nav__project-title {
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.site-nav--bottom.scrolled .site-nav__project-title:hover {
+    color: var(--accent);
+}
+
+.site-nav--bottom::before {
+    display: none;
+}
+
+.site-nav__inner {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--edge-y) var(--edge-x);
+}
+
+/* Desktop: Logo und Menüliste links, Name rechts */
+.site-nav__inner > .site-nav__header {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    flex-shrink: 0;
+}
+
+/* Desktop: Mobile-Name verstecken */
+@media (min-width: 481px) {
+    .site-nav__inner > .site-nav__header .site-nav__brand--mobile {
+        display: none;
+    }
+}
+
+/* Desktop: Start-Menüpunkt verstecken */
+.site-nav__inner > .site-nav__list .site-nav__item:first-child {
+    display: none;
+}
+
+.site-nav__inner > .site-nav__list {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: 12px;
+    flex-shrink: 0;
+}
+
+/* Desktop: Bei gescrollter Navbar - Logo ist im Header, Liste soll direkt daneben sein */
+.site-nav--bottom.scrolled .site-nav__inner > .site-nav__header {
+    gap: 0px;
+}
+
+/* Desktop: Schriftgrößen in gescrollter Navbar - gleich wie Standard */
+.site-nav--bottom.scrolled .site-nav__inner > .site-nav__list .site-nav__link {
+    font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.site-nav--bottom.scrolled .site-nav__inner > .site-nav__list .site-nav__link[aria-current="page"] {
+    font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.site-nav--bottom.scrolled .site-nav__inner > .site-nav__list {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+/* Name als separates Element rechts (Desktop) */
+.site-nav__inner > .site-nav__brand--desktop {
+    margin-left: auto;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+/* Burger-Menü auf Desktop verstecken */
+.site-nav__inner > .site-nav__mobile-menu-toggle {
+    display: none;
+}
+
+.site-nav--bottom .site-nav__inner {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 24px;
+    padding-right: 32px;
+    transition: padding 0.3s ease;
+}
+
+.site-nav--bottom.scrolled .site-nav__inner {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+/* Project context display - shown when scrolled in a project */
+.site-nav__project-context {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text);
+}
+
+.site-nav__project-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.site-nav__project-label {
+    color: var(--text-muted);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.site-nav__project-label:hover {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.site-nav__project-divider {
+    color: var(--text-muted);
+}
+
+.site-nav__project-title {
+    color: var(--text);
+}
+
+.site-nav__project-navigation {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.site-nav__prev-project,
+.site-nav__next-project {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text);
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease;
+}
+
+.site-nav__prev-project {
+    color: var(--text-muted);
+}
+
+.site-nav__prev-project:hover,
+.site-nav__next-project:hover {
+    color: var(--accent);
+}
+
+.site-nav__prev-project .material-symbols-outlined,
+.site-nav__next-project .material-symbols-outlined {
+    font-size: 18px;
+    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+}
+
+/* Show project context and hide other nav items when scrolled in project */
+.site-nav--bottom.scrolled.in-project .site-nav__list {
+    display: flex;
+}
+
+.site-nav--bottom.scrolled.in-project .site-nav__list .site-nav__item:not(:first-child) {
+    display: none;
+}
+
+.site-nav--bottom.scrolled.in-project .site-nav__brand {
+    display: none;
+}
+
+.site-nav--bottom.scrolled.in-project .site-nav__project-context {
+    display: flex;
+}
+
+/* When showing "About", hide the "Projects /" part */
+.site-nav--bottom.in-about .site-nav__project-label,
+.site-nav--bottom.in-about .site-nav__project-divider {
+    display: none;
+}
+
+/* When showing "Interests", hide the "Projects /" part */
+.site-nav--bottom.in-interests .site-nav__project-label,
+.site-nav--bottom.in-interests .site-nav__project-divider {
+    display: none;
+}
+
+/* When in About section, change Next Project button */
+.site-nav--bottom.in-about .site-nav__next-project {
+    color: var(--accent);
+}
+
+.site-nav--bottom.in-about .site-nav__next-project span:first-child {
+    display: none;
+}
+
+.site-nav--bottom.in-about .site-nav__next-project::before {
+    content: "Let's talk";
+    font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.site-nav--bottom.in-about .site-nav__next-project .material-symbols-outlined {
+    transform: rotate(-90deg);
+}
+
+.site-nav--bottom.in-about .site-nav__next-project:hover {
+    color: var(--text);
+}
+
+/* When in Interests section, change Next Project button */
+.site-nav--bottom.in-interests .site-nav__next-project {
+    color: var(--accent);
+}
+
+.site-nav--bottom.in-interests .site-nav__next-project span:first-child {
+    display: none;
+}
+
+.site-nav--bottom.in-interests .site-nav__next-project::before {
+    content: "Let's talk";
+    font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.site-nav--bottom.in-interests .site-nav__next-project .material-symbols-outlined {
+    transform: rotate(-90deg);
+    /* Up arrow */
+}
+
+.site-nav--bottom.in-interests .site-nav__next-project:hover {
+    color: var(--text);
+}
+
+/* When in Contact section, hide the "Projects /" part and next project button */
+.site-nav--bottom.in-contact .site-nav__project-label,
+.site-nav--bottom.in-contact .site-nav__project-divider {
+    display: none;
+}
+
+.site-nav--bottom.in-contact .site-nav__next-project {
+    display: none;
+}
+
+/* Mobile layout adjustments - only for mobile devices */
+@media (max-width: 480px) {
+
+    /* Page Rail Mobile */
+    .page-rail {
+        scroll-snap-type: x mandatory;
+        padding-bottom: 0;
+    }
+
+    .panel {
+        min-height: 100vh;
+    }
+
+    /* Hero Section Mobile */
+    .hero {
+        padding: 0 var(--edge-x-mobile);
+        margin: 0;
+        padding-top: 100px;
+        padding-bottom: 40px;
+        min-height: calc(100vh - 80px);
+        gap: 24px;
+    }
+
+    /* Center content only on start page */
+    .panel--start .hero {
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    /* About Section Mobile */
+    .about-section {
+        min-height: 100vh;
+    }
+
+    .about-overview {
+        min-height: calc(100vh - 80px);
+    }
+
+    .about-details__hero-image {
+        margin-bottom: 24px;
+    }
+
+    .about-details .hero__title {
+        margin-bottom: 24px;
+        font-size: 32px;
+    }
+
+    /* Project Section Mobile */
+    .project-section {
+        height: 100vh;
+    }
+
+    .projects-overview {
+        min-height: calc(100vh - 80px);
+        padding-top: 100px;
+        padding-bottom: 40px;
+    }
+
+    .project__hero-image {
+        margin-bottom: 24px;
+    }
+
+    .project__hero-video {
+        margin-bottom: 24px;
+    }
+
+    /* Interests Section Mobile */
+    .panel--interests {
+        overflow-y: auto;
+    }
+
+    /* Contact Section Mobile */
+    .contact-details {
+        height: 100vh;
+    }
+
+    .contact-details__content {
+        min-height: calc(100vh - 80px);
+        padding-top: 100px;
+    }
+
+    /* Imprint Section Mobile */
+    .imprint-section {
+        min-height: 100vh;
+        padding: 60px var(--edge-x-mobile) 100px var(--edge-x-mobile);
+    }
+}

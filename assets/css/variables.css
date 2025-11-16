@@ -1,0 +1,25 @@
+:root {
+    --bg: #ffffff;
+    --bg-alt: #F7F7F7;
+    --text: #222222;
+    --text-muted: #CCCCCC;
+    --line: #d9d9d9;
+
+    --accent: #0013E6;
+
+    --nav-height: 56px;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 24px;
+    --edge-x: 80px;
+    --edge-y: 32px;
+
+    /* Mobile spacing - custom mobile margins */
+    --edge-x-mobile: 20px;
+    --edge-y-mobile: 24px;
+    --radius-2: 8px;
+
+    --link: var(--accent);
+    --link-hover: #084f99;
+}
