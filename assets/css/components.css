@@ -2098,7 +2098,7 @@
         padding: 180px var(--edge-x-mobile) 100px var(--edge-x-mobile);
         margin-top: 0;
         justify-content: flex-start;
-        min-height: calc(100vh - 280px);
+        min-height: 100vh;
     }
 
     .contact-details-visual {

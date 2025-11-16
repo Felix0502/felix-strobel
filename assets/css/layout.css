@@ -360,7 +360,7 @@
         margin: 0;
         padding-top: 100px;
         padding-bottom: 40px;
-        min-height: calc(100vh - 80px);
+        min-height: 100vh;
         gap: 24px;
     }
 
@@ -377,7 +377,7 @@
     }
 
     .about-overview {
-        min-height: calc(100vh - 80px);
+        min-height: 100vh;
     }
 
     .about-details__hero-image {
@@ -405,7 +405,7 @@
     }
 
     .projects-overview {
-        min-height: calc(100vh - 80px);
+        min-height: 100vh;
         padding-top: 100px;
         padding-bottom: 40px;
     }
@@ -429,7 +429,7 @@
     }
 
     .contact-details__content {
-        min-height: calc(100vh - 80px);
+        min-height: 100vh;
         padding-top: 100px;
     }
 
