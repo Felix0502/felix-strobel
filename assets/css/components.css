@@ -1714,9 +1714,12 @@
     }
 
     .about-overview {
-        padding: 100px var(--edge-x-mobile) 0 var(--edge-x-mobile);
+        padding: 120px var(--edge-x-mobile) 40px var(--edge-x-mobile);
         gap: 0;
         justify-content: flex-start;
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+        min-height: 100dvh;
     }
 
     .about-content {
