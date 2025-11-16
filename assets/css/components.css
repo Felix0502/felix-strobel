@@ -1722,6 +1722,8 @@
     .about-content {
         flex-direction: column;
         gap: 0;
+        margin: 0;
+        padding: 0;
     }
 
     .about-image-wrapper {
