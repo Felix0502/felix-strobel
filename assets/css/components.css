@@ -1663,6 +1663,10 @@
     }
 
     /* About Section Mobile */
+    .about-section {
+        scroll-snap-align: none;
+    }
+
     .about-overview {
         padding: 120px var(--edge-x-mobile) 0 var(--edge-x-mobile);
         gap: 24px;
@@ -2130,6 +2134,10 @@
     }
 
     /* Imprint Section Mobile */
+    .contact-details {
+        scroll-snap-align: none;
+    }
+
     .imprint-section {
         padding: 60px var(--edge-x-mobile);
     }
