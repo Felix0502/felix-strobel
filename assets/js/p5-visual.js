@@ -1,4 +1,4 @@
-// p5.js Visual für Startseite
+// p5.js Visual für Startseite - Optimiert für schnelles Laden
 // Farbe
 const DOT = "#0013E6";
 const BG  = "transparent";

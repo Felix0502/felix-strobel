@@ -603,6 +603,12 @@ function nextSlide(button) {
 	if (button.disabled) return;
 	button.disabled = true;
 	
+	// Disable all arrows during animation
+	var allArrows = slider.querySelectorAll('.project__slider-arrow');
+	allArrows.forEach(function(arrow) {
+		arrow.disabled = true;
+	});
+	
 	var firstSlide = slides[0];
 	var slideWidth = firstSlide.offsetWidth;
 	var gap = 24; // Gap between slides
@@ -628,7 +634,9 @@ function nextSlide(button) {
 		// Re-enable transition after DOM update
 		setTimeout(function() {
 			imagesContainer.style.transition = 'transform 0.5s ease';
-			button.disabled = false;
+			allArrows.forEach(function(arrow) {
+				arrow.disabled = false;
+			});
 			
 			// Update opacity for all slides - first-child CSS rule will handle the active one
 			// Force browser to recalculate the first-child
@@ -673,6 +681,101 @@ function nextSlide(button) {
 		}
 	}, 50);
 }, 500);
+}
+
+function prevSlide(button) {
+	var slider = button.closest('.project__slider');
+	var imagesContainer = slider.querySelector('.project__slider-images');
+	var slides = Array.from(slider.querySelectorAll('.project__slide'));
+	
+	if (slides.length === 0) return;
+	
+	// Prevent multiple clicks during animation
+	if (button.disabled) return;
+	button.disabled = true;
+	
+	// Disable all arrows during animation
+	var allArrows = slider.querySelectorAll('.project__slider-arrow');
+	allArrows.forEach(function(arrow) {
+		arrow.disabled = true;
+	});
+	
+	var lastSlide = slides[slides.length - 1];
+	var slideWidth = lastSlide.offsetWidth;
+	var gap = 24; // Gap between slides
+	
+	// Get the height of the first slide's image/video to center the arrow
+	var firstImage = slides[0].querySelector('.project__slide-image, .project__slide-video');
+	if (firstImage) {
+		var imageHeight = firstImage.offsetHeight;
+		var nav = slider.querySelector('.project__slider-nav');
+		nav.style.top = (imageHeight / 2) + 'px';
+		nav.style.transform = 'translateY(-50%)';
+	}
+	
+	// Move last slide to beginning
+	imagesContainer.insertBefore(lastSlide, slides[0]);
+	
+	// Set initial position (slide is now first, but visually needs to be on the left)
+	imagesContainer.style.transition = 'none';
+	imagesContainer.style.transform = 'translateX(-' + (slideWidth + gap) + 'px)';
+	
+	// Force reflow
+	imagesContainer.offsetHeight;
+	
+	// Animate to center
+	setTimeout(function() {
+		imagesContainer.style.transition = 'transform 0.5s ease';
+		imagesContainer.style.transform = 'translateX(0)';
+		
+		// Re-enable arrows after animation
+		setTimeout(function() {
+			allArrows.forEach(function(arrow) {
+				arrow.disabled = false;
+			});
+			
+			// Update opacity for all slides - first-child CSS rule will handle the active one
+			imagesContainer.offsetHeight;
+			
+			// Handle video playback - pause all videos first
+			slides.forEach(function(slide) {
+				var video = slide.querySelector('video');
+				if (video) {
+					video.pause();
+					video.currentTime = 0;
+				}
+			});
+			
+			// Play video in the new first slide (100% opacity)
+			var newFirstSlide = imagesContainer.querySelector('.project__slide:first-child');
+			if (newFirstSlide) {
+				var video = newFirstSlide.querySelector('video');
+				if (video) {
+					video.play();
+				}
+				
+				// On mobile, expand the new first slide's description by default
+				var isMobile = window.innerWidth <= 480;
+				if (isMobile) {
+					// First, remove expanded class from all slides
+					slides.forEach(function(slide) {
+						var title = slide.querySelector('.project__slide-title');
+						var desc = slide.querySelector('.project__slide-description');
+						if (title) title.classList.remove('expanded');
+						if (desc) desc.classList.remove('expanded');
+					});
+					
+					// Then add expanded class to the new first slide
+					var titleElement = newFirstSlide.querySelector('.project__slide-title');
+					var description = newFirstSlide.querySelector('.project__slide-description');
+					if (titleElement && description) {
+						titleElement.classList.add('expanded');
+						description.classList.add('expanded');
+					}
+				}
+			}
+		}, 500);
+	}, 50);
 }
 
 // Initialize arrow position on page load
@@ -974,6 +1077,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// Toggle slide descriptions
 	document.addEventListener('click', function(e) {
+		var isMobile = window.innerWidth <= 480;
+		
 		// Check if clicking on slide title or title toggle
 		if (e.target.classList.contains('project__slide-title') || 
 		    e.target.closest('.project__slide-title') ||
@@ -991,8 +1096,21 @@ document.addEventListener('DOMContentLoaded', function() {
 			var description = titleElement.nextElementSibling;
 			
 			if (description && description.classList.contains('project__slide-description')) {
-				titleElement.classList.toggle('expanded');
-				description.classList.toggle('expanded');
+				// On mobile, only toggle if this is the active (first) slide
+				if (isMobile) {
+					var slideElement = titleElement.closest('.project__slide');
+					var slider = slideElement ? slideElement.closest('.project__slider') : null;
+					var firstSlide = slider ? slider.querySelector('.project__slide:first-child') : null;
+					
+					if (slideElement === firstSlide) {
+						titleElement.classList.toggle('expanded');
+						description.classList.toggle('expanded');
+					}
+				} else {
+					// Desktop: always toggle
+					titleElement.classList.toggle('expanded');
+					description.classList.toggle('expanded');
+				}
 				e.stopPropagation(); // Prevent slide click handler from firing
 			}
 		}
@@ -1002,15 +1120,21 @@ document.addEventListener('DOMContentLoaded', function() {
 			var slider = slideElement.closest('.project__slider');
 			var firstSlide = slider ? slider.querySelector('.project__slide:first-child') : null;
 			
-			// Only toggle if this is the active (first) slide and on desktop
-			var isMobile = window.innerWidth <= 480;
-			if (slideElement === firstSlide && !isMobile) {
+			// Toggle if this is the active (first) slide
+			if (slideElement === firstSlide) {
 				var titleElement = slideElement.querySelector('.project__slide-title');
 				var description = slideElement.querySelector('.project__slide-description');
 				
 				if (titleElement && description) {
-					titleElement.classList.toggle('expanded');
-					description.classList.toggle('expanded');
+					// On mobile, only toggle if clicking on slide itself (not title/description)
+					if (isMobile && !e.target.closest('.project__slide-title') && !e.target.closest('.project__slide-description')) {
+						titleElement.classList.toggle('expanded');
+						description.classList.toggle('expanded');
+					} else if (!isMobile) {
+						// Desktop: always toggle
+						titleElement.classList.toggle('expanded');
+						description.classList.toggle('expanded');
+					}
 				}
 			}
 		}

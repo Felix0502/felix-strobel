@@ -117,6 +117,7 @@
     transform: none;
     margin-top: 24px;
     align-self: center;
+    color: var(--accent);
 }
 
 .hero__arrow:hover {
@@ -834,11 +835,16 @@
     border-radius: 4px;
 }
 
-/* Plugin slider section with specific 768x432 aspect ratio */
+/* Plugin slider section with specific 768x432 aspect ratio (desktop only) */
 .project__slider-section--plugin .project__slide-image {
     aspect-ratio: 768 / 432 !important;
     width: 100% !important;
     height: auto !important;
+}
+
+/* Override for Co-Worker plugin slider - use portrait format */
+#project-coworker .project__slider-section--plugin-format .project__slide-image--plugin {
+    aspect-ratio: 432 / 768 !important;
 }
 
 .project__slide-title {
@@ -865,13 +871,16 @@
     transition: transform 0.3s ease, color 0.2s ease;
 }
 
-.project__slide-title:hover {
-    color: var(--text);
-}
+/* Hover effects - Desktop only */
+@media (min-width: 481px) {
+    .project__slide-title:hover {
+        color: var(--text);
+    }
 
-.project__slide-title:hover .project__slide-title-toggle {
-    color: var(--text);
-    transform: rotate(180deg);
+    .project__slide-title:hover .project__slide-title-toggle {
+        color: var(--text);
+        transform: rotate(180deg);
+    }
 }
 
 .project__slide-title.expanded {
@@ -896,32 +905,37 @@
 }
 
 .project__slide-description.expanded {
-    max-height: 200px;
+    max-height: 1000px;
     opacity: 1;
     margin-top: 8px;
+    overflow: visible;
 }
 
-/* Hover effect to expand description - only on active (first) slide */
-.project__slide:first-child .project__slide-title:hover+.project__slide-description {
-    max-height: 200px;
-    opacity: 1;
-    margin-top: 8px;
-}
+/* Hover effect to expand description - only on active (first) slide - Desktop only */
+@media (min-width: 481px) {
+    .project__slide:first-child .project__slide-title:hover+.project__slide-description {
+        max-height: 1000px;
+        opacity: 1;
+        margin-top: 8px;
+        overflow: visible;
+    }
 
-/* Hover effect on entire slide - only on active (first) slide */
-.project__slide:first-child:hover .project__slide-description {
-    max-height: 200px;
-    opacity: 1;
-    margin-top: 8px;
-}
+    /* Hover effect on entire slide - only on active (first) slide */
+    .project__slide:first-child:hover .project__slide-description {
+        max-height: 1000px;
+        opacity: 1;
+        margin-top: 8px;
+        overflow: visible;
+    }
 
-.project__slide:first-child:hover .project__slide-title {
-    color: var(--text);
-}
+    .project__slide:first-child:hover .project__slide-title {
+        color: var(--text);
+    }
 
-.project__slide:first-child:hover .project__slide-title-toggle {
-    color: var(--text);
-    transform: rotate(180deg);
+    .project__slide:first-child:hover .project__slide-title-toggle {
+        color: var(--text);
+        transform: rotate(180deg);
+    }
 }
 
 /* Hide slide titles on non-visible slides */
@@ -950,10 +964,12 @@
 
 .project__slider-arrow {
     background: none;
-    border: none;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
     cursor: pointer;
     padding: 0;
-    color: var(--text);
+    color: #999999;
     transition: color 0.2s ease;
     pointer-events: auto;
     display: flex;
@@ -967,7 +983,10 @@
 }
 
 .project__slider-arrow:hover {
-    color: var(--text);
+    color: #999999;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .project__slider-arrow:disabled {
@@ -1759,6 +1778,10 @@
         border-width: 0.5px;
     }
 
+    .skill-item--gradient::before {
+        padding: 0.5px;
+    }
+
     .cv-item {
         border: none;
         background: none;
@@ -1933,7 +1956,7 @@
     }
 
     .project__slider-section:not(:first-of-type) {
-        margin-top: 40px;
+        margin-top: 60px;
     }
 
     .project__slider-section .hero__title {
@@ -1950,6 +1973,12 @@
         overflow: hidden;
     }
 
+    /* Plugin slider wrapper should allow full height on mobile */
+    #project-coworker .project__slider--plugin .project__slider-images-wrapper {
+        overflow: visible;
+        height: auto;
+    }
+
     .project__slider-images {
         gap: 0;
         width: 100%;
@@ -1963,6 +1992,7 @@
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
+        gap: 24px;
     }
 
     .project__slide-title,
@@ -1976,10 +2006,16 @@
         box-sizing: border-box;
     }
 
-    /* Plugin slides should be smaller on mobile to show portrait format */
+    /* Plugin slides should show full height on mobile - adapt to image content */
     #project-coworker .project__slider--plugin .project__slide {
-        width: calc(60% - 12px) !important;
+        width: fit-content !important;
         flex-shrink: 0;
+        /* Width adapts to image content, but limit to viewport */
+        max-width: calc(100vw - 40px);
+        min-width: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .project__slide-image,
@@ -1989,34 +2025,70 @@
         box-sizing: border-box;
     }
 
-    /* Ensure plugin images maintain their portrait aspect ratio on mobile */
+    /* Ensure plugin images show completely on mobile - adapt to natural image dimensions */
+    #project-coworker .project__slider-section--plugin-format .project__slide-image--plugin,
     #project-coworker .project__slide-image--plugin {
-        aspect-ratio: 432 / 768 !important;
-        width: 100% !important;
+        aspect-ratio: auto !important;
+        width: fit-content !important;
         height: auto !important;
-        max-width: 100%;
+        min-width: 200px;
+        max-width: calc(100vw - 40px);
+        max-height: calc(100vh - 200px);
+        object-fit: contain;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    /* Override inline styles on images to show completely */
+    #project-coworker .project__slide-image--plugin img[style*="object-fit"],
+    #project-coworker .project__slide-image--plugin img {
+        object-fit: contain !important;
+        width: auto !important;
+        height: auto !important;
+        max-width: 100% !important;
+        max-height: calc(100vh - 200px) !important;
+        display: block;
+    }
+
+    /* Override the general plugin section rule on mobile for Co-Worker */
+    #project-coworker .project__slider-section--plugin-format .project__slide-image {
+        aspect-ratio: auto !important;
+        height: auto !important;
+        width: fit-content !important;
     }
 
 
     .project__slider-nav {
         position: absolute;
-        left: auto;
+        left: 12px;
         right: 12px;
         top: 50%;
         transform: translateY(-50%);
         pointer-events: none;
+        display: flex;
+        justify-content: space-between;
+        width: calc(100% - 24px);
     }
 
     .project__slider-arrow {
         margin-right: 0;
         margin-top: 0;
+        margin-left: 0;
         pointer-events: auto;
-        color: var(--text-muted);
+        color: #999999 !important;
         transition: color 0.2s ease;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
     }
 
     .project__slider-arrow:hover {
-        color: var(--accent);
+        color: #999999 !important;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
     }
 
     .project__slider-arrow .material-symbols-outlined {
@@ -2124,8 +2196,8 @@
     }
 
     .contact-content .contact-visual {
-        width: 75%;
-        max-width: 300px;
+        width: 60%;
+        max-width: 240px;
         height: auto;
         aspect-ratio: 1;
         margin: 75px 0 40px 0;
