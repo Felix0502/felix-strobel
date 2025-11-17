@@ -1433,11 +1433,11 @@
 /* ===================================== */
 
 .contact-content {
-    padding: 0 80px;
+    padding: calc(var(--nav-height) + 120px) 80px 0 80px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 0;
     scroll-snap-align: start;
