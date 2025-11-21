@@ -1,8 +1,8 @@
 /* Co-Worker Project Specific Styles */
 
-/* Plugin slider images with 432x768 aspect ratio (portrait format) using img tags */
+/* Plugin slider images with 768x432 aspect ratio (landscape format) using img tags */
 #project-coworker .project__slide-image--plugin {
-    aspect-ratio: 432 / 768 !important;
+    aspect-ratio: 768 / 432 !important;
     width: 100% !important;
     height: auto !important;
     overflow: visible;
@@ -37,7 +37,7 @@
 
     /* Plugin slider slides on mobile - adapt to image content */
     #project-coworker .project__slider--plugin .project__slide {
-        width: fit-content !important;
+        width: 100% !important;
         /* Width adapts to image content, but limit to viewport */
         max-width: calc(100vw - 40px);
         min-width: 200px;
@@ -56,12 +56,12 @@
     /* Plugin slider images adapt to their natural format on mobile - show completely */
     #project-coworker .project__slider-section--plugin-format .project__slide-image--plugin,
     #project-coworker .project__slide-image--plugin {
-        aspect-ratio: auto !important;
-        width: fit-content !important;
+        aspect-ratio: 768 / 432 !important;
+        width: 100% !important;
         height: auto !important;
         min-width: 200px;
         max-width: calc(100vw - 40px);
-        max-height: calc(100vh - 200px);
+        max-height: none;
         overflow: visible;
         background: #E0E0E0;
         border-radius: var(--radius-1);
@@ -73,17 +73,20 @@
     }
     
     /* Override the general plugin section rule on mobile */
-    #project-coworker .project__slider-section--plugin-format .project__slide-image {
-        aspect-ratio: auto !important;
+    /* Override general 4:3 aspect ratio rule for Co-Worker plugin slider on mobile */
+    #project-coworker .project__slider-section--plugin-format .project__slide-image,
+    #project-coworker .project__slider--plugin .project__slide-image {
+        aspect-ratio: 768 / 432 !important;
         height: auto !important;
-        width: fit-content !important;
+        width: 100% !important;
     }
 
     #project-coworker .project__slide-image--plugin img {
-        width: auto !important;
+        width: 100% !important;
         height: auto !important;
+        aspect-ratio: 768 / 432 !important;
         max-width: 100% !important;
-        max-height: calc(100vh - 200px) !important;
+        max-height: none !important;
         object-fit: contain !important;
         display: block;
     }

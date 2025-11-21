@@ -850,9 +850,9 @@
     height: auto !important;
 }
 
-/* Override for Co-Worker plugin slider - use portrait format */
+/* Override for Co-Worker plugin slider - use landscape format (768x432) */
 #project-coworker .project__slider-section--plugin-format .project__slide-image--plugin {
-    aspect-ratio: 432 / 768 !important;
+    aspect-ratio: 768 / 432 !important;
 }
 
 .project__slide-title {
@@ -1973,11 +1973,6 @@
         margin-top: 60px;
     }
 
-    /* Specific rule for AI Agents project page */
-    body.project-ai-agents .project__slider-section {
-        margin-top: 100px !important;
-    }
-
     .project__slider-section .hero__title {
         font-size: 28px !important;
         margin-bottom: 24px;
@@ -1990,6 +1985,17 @@
         width: calc(100% - (var(--edge-x-mobile) * 2));
         box-sizing: border-box;
         overflow: hidden;
+    }
+
+    /* Specific rules for AI Agents project page */
+    body.project-ai-agents .project__slider-section {
+        margin-top: 150px !important;
+    }
+
+    body.project-ai-agents .project__slider-images-wrapper {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
     }
 
     /* Plugin slider wrapper should allow full height on mobile */
@@ -2027,7 +2033,7 @@
 
     /* Plugin slides should show full height on mobile - adapt to image content */
     #project-coworker .project__slider--plugin .project__slide {
-        width: fit-content !important;
+        width: 100% !important;
         flex-shrink: 0;
         /* Width adapts to image content, but limit to viewport */
         max-width: calc(100vw - 40px);
@@ -2047,12 +2053,12 @@
     /* Ensure plugin images show completely on mobile - adapt to natural image dimensions */
     #project-coworker .project__slider-section--plugin-format .project__slide-image--plugin,
     #project-coworker .project__slide-image--plugin {
-        aspect-ratio: auto !important;
-        width: fit-content !important;
+        aspect-ratio: 768 / 432 !important;
+        width: 100% !important;
         height: auto !important;
         min-width: 200px;
         max-width: calc(100vw - 40px);
-        max-height: calc(100vh - 200px);
+        max-height: none;
         object-fit: contain;
         display: flex;
         align-items: center;
@@ -2064,18 +2070,22 @@
     #project-coworker .project__slide-image--plugin img[style*="object-fit"],
     #project-coworker .project__slide-image--plugin img {
         object-fit: contain !important;
-        width: auto !important;
+        width: 100% !important;
         height: auto !important;
+        aspect-ratio: 768 / 432 !important;
         max-width: 100% !important;
-        max-height: calc(100vh - 200px) !important;
+        max-height: none !important;
         display: block;
     }
 
     /* Override the general plugin section rule on mobile for Co-Worker */
-    #project-coworker .project__slider-section--plugin-format .project__slide-image {
-        aspect-ratio: auto !important;
+    /* Override general 4:3 aspect ratio rule for Co-Worker plugin slider on mobile */
+    #project-coworker .project__slider-section--plugin-format .project__slide-image,
+    #project-coworker .project__slider--plugin .project__slide-image,
+    #project-coworker .project__slider-section--plugin-format .project__slide-image--plugin .project__slide-image {
+        aspect-ratio: 768 / 432 !important;
         height: auto !important;
-        width: fit-content !important;
+        width: 100% !important;
     }
 
 
