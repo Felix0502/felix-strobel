@@ -20,6 +20,15 @@
     overflow-y: hidden;
 }
 
+.panel--projects,
+.panel--about,
+.panel--interests,
+.panel--contact {
+    content-visibility: auto;
+    contain: layout paint style;
+    contain-intrinsic-size: 1200px 800px;
+}
+
 .panel--projects {
     overflow-y: auto;
     height: 100vh;
