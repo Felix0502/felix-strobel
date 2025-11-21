@@ -155,6 +155,14 @@
     position: relative;
 }
 
+.hero__visual--image {
+    background-image: url('../images/Key_Visual/Key_Visual.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 12px;
+}
+
 /* Center visual and title on start page */
 .panel--start .hero__visual {
     align-self: center;
@@ -1684,17 +1692,19 @@
     }
 
     .hero__visual {
-        width: 100px;
-        height: 100px;
-        margin-bottom: 24px;
+        width: 140px;
+        height: 140px;
+        margin-bottom: 12px;
     }
 
     /* Center content only on start page */
     .panel--start .hero__title {
         text-align: center;
-        width: auto !important;
-        max-width: 90% !important;
+        width: 100% !important;
+        max-width: 100% !important;
         align-self: center;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .panel--start .hero__visual {
