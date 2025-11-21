@@ -162,13 +162,22 @@
 
 	panels.forEach(function (panel) { io.observe(panel); });
 
-	// Ensure initial state is correct on load
+	// Ensure initial state is correct on load (respect deep links)
 	window.addEventListener('load', function () {
-		var hash = window.location.hash.replace('#', '') || 'start';
-		var target = document.getElementById(hash);
-		if (target) {
-			getLinkForId(hash)?.setAttribute('aria-current', 'page');
-			target.focus({ preventScroll: true });
+		var hash = window.location.hash.replace('#', '');
+		var targetId = hash || 'start';
+		var target = document.getElementById(targetId);
+		if (!target) return;
+
+		getLinkForId(targetId)?.setAttribute('aria-current', 'page');
+		target.focus({ preventScroll: true });
+
+		// If a hash was provided (e.g., returning from mobile project detail),
+		// immediately scroll to that panel so the user lands in the expected section.
+		if (hash && hash !== 'start') {
+			setTimeout(function () {
+				target.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'start' });
+			}, 50);
 		}
 	});
 

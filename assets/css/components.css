@@ -564,12 +564,12 @@
 }
 
 .cv-item--blue {
-    border-color: var(--accent);
-    color: var(--accent);
+    border-color: var(--text-muted);
+    color: var(--text);
 }
 
 .cv-item--blue .cv-item__date {
-    color: var(--accent);
+    color: var(--text);
 }
 
 .about-details__skills-wrapper {
@@ -1813,6 +1813,10 @@
         white-space: normal;
     }
 
+    .cv-item--blue .cv-item__date {
+        color: var(--text);
+    }
+
     .about-details__skills {
         gap: 8px;
     }
@@ -1967,6 +1971,11 @@
 
     .project__slider-section:not(:first-of-type) {
         margin-top: 60px;
+    }
+
+    /* Specific rule for AI Agents project page */
+    body.project-ai-agents .project__slider-section {
+        margin-top: 100px !important;
     }
 
     .project__slider-section .hero__title {
@@ -2242,7 +2251,7 @@
         border-bottom-style: solid !important;
         border-bottom-color: var(--text) !important;
         order: 2;
-        margin-top: 0;
+        margin-top: 35px;
         margin-bottom: 20px;
         position: relative;
         z-index: 10;
