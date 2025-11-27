@@ -22,7 +22,7 @@ let t0;
 let canvas;
 
 function setup(){
-  const container = document.getElementById('p5-visual');
+  const container = document.getElementById('sketchContainer');
   if (!container) return;
   
   // Responsive canvas size
@@ -30,7 +30,7 @@ function setup(){
   const canvasSize = isMobile ? 110 : 140;
   
   canvas = createCanvas(canvasSize, canvasSize);
-  canvas.parent('p5-visual');
+  canvas.parent('sketchContainer');
   noStroke();
   t0 = millis();
 }
