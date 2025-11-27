@@ -80,15 +80,6 @@
     padding-right: 0;
 }
 
-/* Hide scrolled navbar when on start page - always show main navbar only */
-/* When Start link has aria-current="page", hide the scrolled navbar */
-body:has(.site-nav__link[data-target="start"][aria-current="page"]) .site-nav--bottom.scrolled {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-}
-
 .hero__title {
     max-width: none;
     width: 50%;

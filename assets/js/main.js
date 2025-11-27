@@ -135,7 +135,6 @@
 
 	// Observe active panel within the horizontal scroller
 	var activeId = 'start';
-	var navbar = document.querySelector('.site-nav--bottom');
 	var io = new IntersectionObserver(function (entries) {
 		entries.forEach(function (entry) {
 			if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
@@ -153,17 +152,6 @@
 					}
 				});
 
-				// Hide scrolled navbar when on start page
-				if (navbar) {
-					if (id === 'start') {
-						navbar.classList.remove('scrolled');
-						navbar.classList.remove('in-project');
-						navbar.classList.remove('in-about');
-						navbar.classList.remove('in-interests');
-						navbar.classList.remove('in-contact');
-					}
-				}
-
 				// Move programmatic focus to the active panel without causing scroll jumps
 				requestAnimationFrame(function () {
 					entry.target.focus({ preventScroll: true });
@@ -174,74 +162,8 @@
 
 	panels.forEach(function (panel) { io.observe(panel); });
 
-	// Disable browser scroll restoration (especially important for Safari)
-	if ('scrollRestoration' in history) {
-		history.scrollRestoration = 'manual';
-	}
-
-	// Function to reset all scroll positions
-	function resetAllScrollPositions() {
-		// Reset horizontal scroll position of main rail
-		var rail = document.getElementById('rail');
-		if (rail) {
-			rail.scrollLeft = 0;
-		}
-		
-		// Reset all panels
-		var panels = document.querySelectorAll('.panel');
-		panels.forEach(function(panel) {
-			panel.scrollTop = 0;
-		});
-		
-		// Reset project sections
-		var projectSections = document.querySelectorAll('.project-section');
-		projectSections.forEach(function(section) {
-			section.scrollTop = 0;
-		});
-		
-		// Reset about section
-		var aboutSection = document.querySelector('.about-section');
-		if (aboutSection) {
-			aboutSection.scrollTop = 0;
-		}
-		
-		// Reset interests gallery
-		var interestsGallery = document.querySelector('.interests-gallery');
-		if (interestsGallery) {
-			interestsGallery.scrollTop = 0;
-		}
-		
-		// Reset contact details
-		var contactDetails = document.querySelector('.contact-details');
-		if (contactDetails) {
-			contactDetails.scrollTop = 0;
-		}
-		
-		// Reset projects panel
-		var projectsPanel = document.querySelector('.panel--projects');
-		if (projectsPanel) {
-			projectsPanel.scrollTop = 0;
-		}
-	}
-
-	// Ensure page always starts at the beginning of start section
-	document.addEventListener('DOMContentLoaded', function () {
-		resetAllScrollPositions();
-	});
-	
-	// Also reset on pageshow (for Safari's Back/Forward Cache)
-	window.addEventListener('pageshow', function(event) {
-		// If page was loaded from cache (back/forward navigation)
-		if (event.persisted) {
-			resetAllScrollPositions();
-		}
-	});
-
 	// Ensure initial state is correct on load (respect deep links)
 	window.addEventListener('load', function () {
-		// Reset all scroll positions first
-		resetAllScrollPositions();
-		
 		var hash = window.location.hash.replace('#', '');
 		var targetId = hash || 'start';
 		var target = document.getElementById(targetId);
@@ -254,19 +176,7 @@
 		// immediately scroll to that panel so the user lands in the expected section.
 		if (hash && hash !== 'start') {
 			setTimeout(function () {
-				// Reset again before scrolling to target
-				resetAllScrollPositions();
 				target.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'start' });
-			}, 50);
-		} else {
-			// Always scroll to start section at the beginning
-			var startPanel = document.getElementById('start');
-			setTimeout(function () {
-				// Reset again before scrolling to start
-				resetAllScrollPositions();
-				if (startPanel) {
-					startPanel.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'start' });
-				}
 			}, 50);
 		}
 	});
@@ -519,9 +429,36 @@
 		});
 	}
 
+	// Helper function to check if a hero element is prominently visible in viewport
+	// Returns true only for start page hero - project and about heroes allow scroll navbar
+	function isHeroVisible() {
+		// Only check start page hero - project and about heroes should allow scroll navbar
+		var startPanel = document.querySelector('.panel--start');
+		if (startPanel) {
+			var rect = startPanel.getBoundingClientRect();
+			// Check if start panel is visible (within viewport)
+			if (rect.left >= 0 && rect.left < window.innerWidth) {
+				var startHero = startPanel.querySelector('.hero');
+				if (startHero) {
+					var heroRect = startHero.getBoundingClientRect();
+					// Hero is visible if it's still significantly in viewport (more than 30% visible)
+					var visibleHeight = Math.min(heroRect.bottom, window.innerHeight) - Math.max(heroRect.top, 0);
+					var heroHeight = heroRect.height;
+					if (visibleHeight > 0 && (visibleHeight / heroHeight) > 0.3) {
+						return true;
+					}
+				}
+			}
+		}
+		
+		// Don't check project hero elements - allow scroll navbar to appear when scrolling
+		// Don't check about hero - allow scroll navbar to appear when scrolling
+		
+		return false;
+	}
+
 	// Navbar background on vertical scroll within project sections
 	var navbar = document.querySelector('.site-nav--bottom');
-	var startPanel = document.querySelector('.panel--start');
 	var projectsPanel = document.querySelector('.panel--projects');
 	var projectSections = document.querySelectorAll('.project-section');
 	var projectTitleSpan = document.querySelector('.site-nav__project-title');
@@ -576,9 +513,8 @@
 				return;
 			}
 			
-			// Never show scrolled navbar when on start page
-			var startLink = document.querySelector('.site-nav__link[data-target="start"][aria-current="page"]');
-			if (startLink) {
+			// Don't show scrolled navbar if hero is visible
+			if (isHeroVisible()) {
 				navbar.classList.remove('scrolled');
 				navbar.classList.remove('in-project');
 				return;
@@ -609,9 +545,8 @@
 					return;
 				}
 				
-				// Never show scrolled navbar when on start page
-				var startLink = document.querySelector('.site-nav__link[data-target="start"][aria-current="page"]');
-				if (startLink) {
+				// Don't show scrolled navbar if hero is visible
+				if (isHeroVisible()) {
 					navbar.classList.remove('scrolled');
 					navbar.classList.remove('in-project');
 					return;
@@ -643,9 +578,8 @@
 				return;
 			}
 			
-			// Never show scrolled navbar when on start page
-			var startLink = document.querySelector('.site-nav__link[data-target="start"][aria-current="page"]');
-			if (startLink) {
+			// Don't show scrolled navbar if hero is visible
+			if (isHeroVisible()) {
 				navbar.classList.remove('scrolled');
 				navbar.classList.remove('in-project');
 				navbar.classList.remove('in-about');
@@ -682,6 +616,14 @@
 			// Don't show scrolled navbar on mobile (only on desktop)
 			var isMobile = window.innerWidth <= 480;
 			if (isMobile) {
+				return;
+			}
+			
+			// Don't show scrolled navbar if hero is visible
+			if (isHeroVisible()) {
+				navbar.classList.remove('scrolled');
+				navbar.classList.remove('in-project');
+				navbar.classList.remove('in-about');
 				return;
 			}
 			
@@ -1034,9 +976,8 @@ document.addEventListener('DOMContentLoaded', function() {
 				return;
 			}
 			
-			// Never show scrolled navbar when on start page
-			var startLink = document.querySelector('.site-nav__link[data-target="start"][aria-current="page"]');
-			if (startLink) {
+			// Don't show scrolled navbar if hero is visible
+			if (isHeroVisible()) {
 				navbar.classList.remove('scrolled');
 				navbar.classList.remove('in-project');
 				navbar.classList.remove('in-interests');
@@ -1073,9 +1014,8 @@ document.addEventListener('DOMContentLoaded', function() {
 				return;
 			}
 			
-			// Never show scrolled navbar when on start page
-			var startLink = document.querySelector('.site-nav__link[data-target="start"][aria-current="page"]');
-			if (startLink) {
+			// Don't show scrolled navbar if hero is visible
+			if (isHeroVisible()) {
 				navbar.classList.remove('scrolled');
 				navbar.classList.remove('in-project');
 				navbar.classList.remove('in-interests');
@@ -1147,9 +1087,8 @@ document.addEventListener('DOMContentLoaded', function() {
 				return;
 			}
 			
-			// Never show scrolled navbar when on start page
-			var startLink = document.querySelector('.site-nav__link[data-target="start"][aria-current="page"]');
-			if (startLink) {
+			// Don't show scrolled navbar if hero is visible
+			if (isHeroVisible()) {
 				navbar.classList.remove('scrolled');
 				navbar.classList.remove('in-project');
 				navbar.classList.remove('in-contact');
@@ -1204,6 +1143,14 @@ document.addEventListener('DOMContentLoaded', function() {
 			// Don't show scrolled navbar on mobile (only on desktop)
 			var isMobile = window.innerWidth <= 480;
 			if (isMobile) {
+				return;
+			}
+			
+			// Don't show scrolled navbar if hero is visible
+			if (isHeroVisible()) {
+				navbar.classList.remove('scrolled');
+				navbar.classList.remove('in-project');
+				navbar.classList.remove('in-contact');
 				return;
 			}
 			
