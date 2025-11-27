@@ -512,8 +512,8 @@
 }
 
 .about-details__cta .material-symbols-outlined {
-    font-size: 18px;
-    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20;
+    font-size: 24px;
+    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;
 }
 
 .about-details__lower {
@@ -1612,6 +1612,14 @@
     letter-spacing: 0.01em;
     color: var(--text);
     text-align: center;
+}
+
+.contact-details__intro p {
+    margin: 0;
+}
+
+.contact-details__intro p+p {
+    margin-top: 0;
 }
 
 .contact-details__info {
