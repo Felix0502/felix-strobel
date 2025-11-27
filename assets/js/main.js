@@ -135,6 +135,7 @@
 
 	// Observe active panel within the horizontal scroller
 	var activeId = 'start';
+	var navbar = document.querySelector('.site-nav--bottom');
 	var io = new IntersectionObserver(function (entries) {
 		entries.forEach(function (entry) {
 			if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
@@ -151,6 +152,17 @@
 						a.removeAttribute('aria-current');
 					}
 				});
+
+				// Hide scrolled navbar when on start page
+				if (navbar) {
+					if (id === 'start') {
+						navbar.classList.remove('scrolled');
+						navbar.classList.remove('in-project');
+						navbar.classList.remove('in-about');
+						navbar.classList.remove('in-interests');
+						navbar.classList.remove('in-contact');
+					}
+				}
 
 				// Move programmatic focus to the active panel without causing scroll jumps
 				requestAnimationFrame(function () {
@@ -431,6 +443,7 @@
 
 	// Navbar background on vertical scroll within project sections
 	var navbar = document.querySelector('.site-nav--bottom');
+	var startPanel = document.querySelector('.panel--start');
 	var projectsPanel = document.querySelector('.panel--projects');
 	var projectSections = document.querySelectorAll('.project-section');
 	var projectTitleSpan = document.querySelector('.site-nav__project-title');
@@ -485,6 +498,14 @@
 				return;
 			}
 			
+			// Never show scrolled navbar when on start page
+			var startLink = document.querySelector('.site-nav__link[data-target="start"][aria-current="page"]');
+			if (startLink) {
+				navbar.classList.remove('scrolled');
+				navbar.classList.remove('in-project');
+				return;
+			}
+			
 			// Check if we're in a project section (not in overview)
 			if (!projectsIntro) return;
 			var introRect = projectsIntro.getBoundingClientRect();
@@ -507,6 +528,14 @@
 				// Don't show scrolled navbar on mobile (only on desktop)
 				var isMobile = window.innerWidth <= 480;
 				if (isMobile) {
+					return;
+				}
+				
+				// Never show scrolled navbar when on start page
+				var startLink = document.querySelector('.site-nav__link[data-target="start"][aria-current="page"]');
+				if (startLink) {
+					navbar.classList.remove('scrolled');
+					navbar.classList.remove('in-project');
 					return;
 				}
 				
@@ -533,6 +562,15 @@
 			// Don't show scrolled navbar on mobile (only on desktop)
 			var isMobile = window.innerWidth <= 480;
 			if (isMobile) {
+				return;
+			}
+			
+			// Never show scrolled navbar when on start page
+			var startLink = document.querySelector('.site-nav__link[data-target="start"][aria-current="page"]');
+			if (startLink) {
+				navbar.classList.remove('scrolled');
+				navbar.classList.remove('in-project');
+				navbar.classList.remove('in-about');
 				return;
 			}
 			
@@ -918,6 +956,15 @@ document.addEventListener('DOMContentLoaded', function() {
 				return;
 			}
 			
+			// Never show scrolled navbar when on start page
+			var startLink = document.querySelector('.site-nav__link[data-target="start"][aria-current="page"]');
+			if (startLink) {
+				navbar.classList.remove('scrolled');
+				navbar.classList.remove('in-project');
+				navbar.classList.remove('in-interests');
+				return;
+			}
+			
 			if (!interestsContent) return;
 			var contentRect = interestsContent.getBoundingClientRect();
 			var isInOverview = contentRect.bottom > 100;
@@ -945,6 +992,15 @@ document.addEventListener('DOMContentLoaded', function() {
 			// Don't show scrolled navbar on mobile (only on desktop)
 			var isMobile = window.innerWidth <= 480;
 			if (isMobile) {
+				return;
+			}
+			
+			// Never show scrolled navbar when on start page
+			var startLink = document.querySelector('.site-nav__link[data-target="start"][aria-current="page"]');
+			if (startLink) {
+				navbar.classList.remove('scrolled');
+				navbar.classList.remove('in-project');
+				navbar.classList.remove('in-interests');
 				return;
 			}
 			
@@ -1010,6 +1066,15 @@ document.addEventListener('DOMContentLoaded', function() {
 			// Don't show scrolled navbar on mobile (only on desktop)
 			var isMobile = window.innerWidth <= 480;
 			if (isMobile) {
+				return;
+			}
+			
+			// Never show scrolled navbar when on start page
+			var startLink = document.querySelector('.site-nav__link[data-target="start"][aria-current="page"]');
+			if (startLink) {
+				navbar.classList.remove('scrolled');
+				navbar.classList.remove('in-project');
+				navbar.classList.remove('in-contact');
 				return;
 			}
 			

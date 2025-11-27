@@ -32,6 +32,8 @@
 /* Adjust navigation position for smaller slides */
 #project-coworker .project__slider-section--plugin-format .project__slider-nav {
     left: calc(28% + 24px) !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
 }
 
 /* Mobile Optimizations for Co-Worker Project */
