@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Three-Joint Arm — Felix Strobel</title>
+    <title>Mechanical Sketcher — Felix Strobel</title>
     <link rel="icon" type="image/png" href="assets/images/Visual/Logo_Felix_Strobel.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +38,7 @@
                     style="background-image: url('assets/images/Mechatronik_Titel/Mechatronik_Titel.png'); background-size: cover; background-position: center;">
                 </div>
 
-                <h1 class="hero__title">Three-Joint Arm</h1>
+                <h1 class="hero__title">Mechanical Sketcher</h1>
 
                 <div class="project__tags">
                     <div class="project-tag">Robotics</div>
@@ -47,22 +47,19 @@
                 </div>
 
                 <div class="project__content">
-                    <div class="project__body">
-                        <div class="project__body-column">
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
-                                dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                nascetur ridiculus mus.</p>
+                        <div class="project__body">
+                            <div class="project__body-column">
+                                <p>In a one-week mechatronics workshop, we built a two-joint drawing arm inspired by human movement. The idea was to create a device that doesn’t draw perfectly, but with a natural, slightly imperfect line quality. The arm could move freely and draw any shape with a hand-drawn feel.</p>
+                            </div>
+                            <div class="project__body-column">
+                                <p>Our concept imagined generating small postcards: users describe their mood, an AI creates a visual, and the arm draws it. We prototyped the system with an Arduino, stepper and servo motors, laser-cut wood parts, and a simple pen holder — a compact test of human-like machine drawing.</p>
+                            </div>
                         </div>
-                        <div class="project__body-column">
-                            <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
-                                massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
-                            </p>
-                        </div>
-                    </div>
 
                     <div class="project__meta-sidebar">
                         <div class="project__meta-group">
                             <h3>Mechatronics Workshop</h3>
+                            <p>— Olivier Brückner (Lecturer)</p>
                             <p>Felix Strobel<br>Jasper Schminke<br>Ismael Simoncini</p>
                         </div>
                     </div>
@@ -84,12 +81,11 @@
                                 </video>
                             </div>
                                     <h4 class="project__slide-title">
-                                <span>Video 1</span>
+                                <span>Coordinated Movement</span>
                                         <span
                                             class="material-symbols-outlined project__slide-title-toggle">keyboard_arrow_down</span>
                                     </h4>
-                                    <p class="project__slide-description">Lorem ipsum dolor sit amet, consectetuer
-                                        adipiscing elit.</p>
+                                    <p class="project__slide-description">The two-joint drawing arm moves through predefined coordinates in space. For each coordinate, it knows the exact motor values for both the stepper and the servo. By adjusting these motors, the arm can reach any point in its drawing area and sketch any pattern mapped to those coordinates.</p>
                                 </div>
                                 <div class="project__slide" data-slide="1">
                             <div class="project__slide-image">
@@ -98,12 +94,11 @@
                                 </video>
                             </div>
                                     <h4 class="project__slide-title">
-                                <span>Video 2</span>
+                                <span>Natural Line Quality</span>
                                         <span
                                             class="material-symbols-outlined project__slide-title-toggle">keyboard_arrow_down</span>
                                     </h4>
-                                    <p class="project__slide-description">Donec quam felis, ultricies nec,
-                                        pellentesque eu.</p>
+                                    <p class="project__slide-description">Because the arm uses two human-like joints, it isn’t perfectly rigid. This slight instability creates a natural, imperfect line on the paper — every movement is a bit different. When patterns are repeated, these small variations overlap and form an organic texture, which was exactly the effect we aimed for.</p>
                                 </div>
                                 <div class="project__slide" data-slide="2">
                             <div class="project__slide-image">
@@ -112,12 +107,11 @@
                                 </video>
                             </div>
                                     <h4 class="project__slide-title">
-                                <span>Video 3</span>
+                                <span>Spatial Calibration</span>
                                         <span
                                             class="material-symbols-outlined project__slide-title-toggle">keyboard_arrow_down</span>
                                     </h4>
-                                    <p class="project__slide-description">Integer tincidunt. Cras dapibus. Vivamus
-                                        elementum.</p>
+                                    <p class="project__slide-description">We first mapped the arm’s reachable area using test coordinates and motor values. With these reference points and a simple formula in the code, the arm can now calculate the needed motor settings for any coordinate — and move freely to draw any shape.</p>
                                 </div>
                             </div>
                             <div class="project__slider-nav">
@@ -142,36 +136,33 @@
                                 style="background-image: url('assets/images/Mechatronik_Final/Ergebnis_01.png'); background-size: cover; background-position: center;">
                             </div>
                                     <h4 class="project__slide-title">
-                                        <span>Bild Titel 1</span>
+                                        <span>Final Prototype</span>
                                         <span
                                             class="material-symbols-outlined project__slide-title-toggle">keyboard_arrow_down</span>
                                     </h4>
-                                    <p class="project__slide-description">Lorem ipsum dolor sit amet, consectetuer
-                                        adipiscing elit.</p>
+                                    <p class="project__slide-description">The final prototype was built in one week using laser-cut wooden arm parts, motors, and an Arduino. Mounted on a simple wooden base, the arm can draw directly onto postcards placed beneath it.</p>
                                 </div>
                                 <div class="project__slide" data-slide="1">
                             <div class="project__slide-image"
                                 style="background-image: url('assets/images/Mechatronik_Final/Ergebnis_02.png'); background-size: cover; background-position: center;">
                             </div>
                                     <h4 class="project__slide-title">
-                                        <span>Bild Titel 2</span>
+                                        <span>Control Setup</span>
                                         <span
                                             class="material-symbols-outlined project__slide-title-toggle">keyboard_arrow_down</span>
                                     </h4>
-                                    <p class="project__slide-description">Donec quam felis, ultricies nec,
-                                        pellentesque eu.</p>
+                                    <p class="project__slide-description">We used an Arduino connected to the stepper and servo motors, running our custom code to control the arm’s movements.</p>
                                 </div>
                                 <div class="project__slide" data-slide="2">
                             <div class="project__slide-image"
                                 style="background-image: url('assets/images/Mechatronik_Final/Ergebnis_03.png'); background-size: cover; background-position: center;">
                             </div>
                                     <h4 class="project__slide-title">
-                                        <span>Bild Titel 3</span>
+                                        <span>Pen Mount</span>
                                         <span
                                             class="material-symbols-outlined project__slide-title-toggle">keyboard_arrow_down</span>
                                     </h4>
-                                    <p class="project__slide-description">Integer tincidunt. Cras dapibus. Vivamus
-                                        elementum.</p>
+                                    <p class="project__slide-description">We used a simple Stabilo pen, mounted through a laser-cut hole at the tip of the arm. The pen can be removed and replaced easily — just like using a normal drawing tool.</p>
                                 </div>
                             </div>
                             <div class="project__slider-nav">
@@ -196,60 +187,55 @@
                                 style="background-image: url('assets/images/Mechatronik_Prozess/Prozess_01.png'); background-size: cover; background-position: center;">
                             </div>
                                     <h4 class="project__slide-title">
-                                        <span>Bild Titel 1</span>
+                                        <span>Laser-Cut Components</span>
                                         <span
                                             class="material-symbols-outlined project__slide-title-toggle">keyboard_arrow_down</span>
                                     </h4>
-                                    <p class="project__slide-description">Lorem ipsum dolor sit amet, consectetuer
-                                        adipiscing elit.</p>
+                                    <p class="project__slide-description">To work fast, we laser-cut all structural parts from wood using our prepared vector paths. This gave us a quick and precise foundation for building the arm.</p>
                                 </div>
                                 <div class="project__slide" data-slide="1">
                             <div class="project__slide-image"
                                 style="background-image: url('assets/images/Mechatronik_Prozess/Prozess_02.png'); background-size: cover; background-position: center;">
                             </div>
                                     <h4 class="project__slide-title">
-                                        <span>Bild Titel 2</span>
+                                        <span>Motor Mounting</span>
                                         <span
                                             class="material-symbols-outlined project__slide-title-toggle">keyboard_arrow_down</span>
                                     </h4>
-                                    <p class="project__slide-description">Donec quam felis, ultricies nec,
-                                        pellentesque eu.</p>
+                                    <p class="project__slide-description">The motors were fitted into precisely laser-cut holes and held in place through simple press-fit connections — no glue, just clean, straightforward snap-in assembly.</p>
                                 </div>
                                 <div class="project__slide" data-slide="2">
                             <div class="project__slide-image"
                                 style="background-image: url('assets/images/Mechatronik_Prozess/Prozess_03.png'); background-size: cover; background-position: center;">
                             </div>
                                     <h4 class="project__slide-title">
-                                        <span>Bild Titel 3</span>
+                                        <span>Homing Sensor</span>
                                         <span
                                             class="material-symbols-outlined project__slide-title-toggle">keyboard_arrow_down</span>
                                     </h4>
-                                    <p class="project__slide-description">Integer tincidunt. Cras dapibus. Vivamus
-                                        elementum.</p>
+                                    <p class="project__slide-description">We added a simple button-style homing sensor, similar to those used in 3D printers. It lets the arm reset to a defined starting position before moving through its coordinates.</p>
                                 </div>
                         <div class="project__slide" data-slide="3">
                             <div class="project__slide-image"
                                 style="background-image: url('assets/images/Mechatronik_Prozess/Prozess_04.png'); background-size: cover; background-position: center;">
                             </div>
                             <h4 class="project__slide-title">
-                                <span>Bild Titel 4</span>
+                                        <span>Reachable Area</span>
                                 <span
                                     class="material-symbols-outlined project__slide-title-toggle">keyboard_arrow_down</span>
                             </h4>
-                            <p class="project__slide-description">Lorem ipsum dolor sit amet, consectetuer
-                                adipiscing elit.</p>
+                                    <p class="project__slide-description">We mapped the arm’s full drawing area and placed test coordinates inside it. These reference points helped the arm understand its space and calculate the correct motor settings for any position.</p>
                         </div>
                         <div class="project__slide" data-slide="4">
                             <div class="project__slide-image"
                                 style="background-image: url('assets/images/Mechatronik_Prozess/Prozess_05.png'); background-size: cover; background-position: center;">
                             </div>
                             <h4 class="project__slide-title">
-                                <span>Bild Titel 5</span>
+                                <span>Radial Navigation</span>
                                 <span
                                     class="material-symbols-outlined project__slide-title-toggle">keyboard_arrow_down</span>
                             </h4>
-                            <p class="project__slide-description">Donec quam felis, ultricies nec,
-                                pellentesque eu.</p>
+                            <p class="project__slide-description">Using these reference points, the arm moves confidently from coordinate to coordinate, navigating the radial space we defined for it.</p>
                         </div>
                             </div>
                             <div class="project__slider-nav">
