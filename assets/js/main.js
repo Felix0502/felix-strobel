@@ -174,24 +174,74 @@
 
 	panels.forEach(function (panel) { io.observe(panel); });
 
-	// Ensure page always starts at the beginning of start section
-	document.addEventListener('DOMContentLoaded', function () {
+	// Disable browser scroll restoration (especially important for Safari)
+	if ('scrollRestoration' in history) {
+		history.scrollRestoration = 'manual';
+	}
+
+	// Function to reset all scroll positions
+	function resetAllScrollPositions() {
+		// Reset horizontal scroll position of main rail
 		var rail = document.getElementById('rail');
-		var startPanel = document.getElementById('start');
-		
-		// Reset horizontal scroll position to start
 		if (rail) {
 			rail.scrollLeft = 0;
 		}
 		
-		// Reset any vertical scroll position in start panel
-		if (startPanel) {
-			startPanel.scrollTop = 0;
+		// Reset all panels
+		var panels = document.querySelectorAll('.panel');
+		panels.forEach(function(panel) {
+			panel.scrollTop = 0;
+		});
+		
+		// Reset project sections
+		var projectSections = document.querySelectorAll('.project-section');
+		projectSections.forEach(function(section) {
+			section.scrollTop = 0;
+		});
+		
+		// Reset about section
+		var aboutSection = document.querySelector('.about-section');
+		if (aboutSection) {
+			aboutSection.scrollTop = 0;
+		}
+		
+		// Reset interests gallery
+		var interestsGallery = document.querySelector('.interests-gallery');
+		if (interestsGallery) {
+			interestsGallery.scrollTop = 0;
+		}
+		
+		// Reset contact details
+		var contactDetails = document.querySelector('.contact-details');
+		if (contactDetails) {
+			contactDetails.scrollTop = 0;
+		}
+		
+		// Reset projects panel
+		var projectsPanel = document.querySelector('.panel--projects');
+		if (projectsPanel) {
+			projectsPanel.scrollTop = 0;
+		}
+	}
+
+	// Ensure page always starts at the beginning of start section
+	document.addEventListener('DOMContentLoaded', function () {
+		resetAllScrollPositions();
+	});
+	
+	// Also reset on pageshow (for Safari's Back/Forward Cache)
+	window.addEventListener('pageshow', function(event) {
+		// If page was loaded from cache (back/forward navigation)
+		if (event.persisted) {
+			resetAllScrollPositions();
 		}
 	});
 
 	// Ensure initial state is correct on load (respect deep links)
 	window.addEventListener('load', function () {
+		// Reset all scroll positions first
+		resetAllScrollPositions();
+		
 		var hash = window.location.hash.replace('#', '');
 		var targetId = hash || 'start';
 		var target = document.getElementById(targetId);
@@ -200,29 +250,20 @@
 		getLinkForId(targetId)?.setAttribute('aria-current', 'page');
 		target.focus({ preventScroll: true });
 
-		// Always reset scroll positions to start at the beginning
-		var rail = document.getElementById('rail');
-		var startPanel = document.getElementById('start');
-		
-		// Reset horizontal scroll position to start
-		if (rail) {
-			rail.scrollLeft = 0;
-		}
-		
-		// Reset any vertical scroll position in start panel
-		if (startPanel) {
-			startPanel.scrollTop = 0;
-		}
-
 		// If a hash was provided (e.g., returning from mobile project detail),
 		// immediately scroll to that panel so the user lands in the expected section.
 		if (hash && hash !== 'start') {
 			setTimeout(function () {
+				// Reset again before scrolling to target
+				resetAllScrollPositions();
 				target.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'start' });
 			}, 50);
 		} else {
 			// Always scroll to start section at the beginning
+			var startPanel = document.getElementById('start');
 			setTimeout(function () {
+				// Reset again before scrolling to start
+				resetAllScrollPositions();
 				if (startPanel) {
 					startPanel.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'start' });
 				}
