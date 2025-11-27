@@ -2,25 +2,25 @@
 
 /* Plugin slider images with 768x432 aspect ratio (landscape format) using img tags - DESKTOP ONLY */
 @media (min-width: 481px) {
-    #project-coworker .project__slide-image--plugin {
-        aspect-ratio: 768 / 432 !important;
-        width: 100% !important;
-        height: auto !important;
-        overflow: visible;
-        background: #E0E0E0;
-        border-radius: var(--radius-1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+#project-coworker .project__slide-image--plugin {
+    aspect-ratio: 768 / 432 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible;
+    background: #E0E0E0;
+    border-radius: var(--radius-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    #project-coworker .project__slide-image--plugin img {
-        width: auto;
-        height: auto;
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-        display: block;
+#project-coworker .project__slide-image--plugin img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
     }
 }
 

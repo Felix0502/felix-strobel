@@ -1791,7 +1791,19 @@
     .about-details__lower {
         grid-template-columns: 1fr;
         width: 100%;
-        gap: 24px;
+        gap: 48px;
+    }
+
+    .about-details__skills-wrapper {
+        gap: 48px;
+    }
+
+    .about-details__skills-group {
+        margin-bottom: 0;
+    }
+
+    .about-details__cv-wrapper {
+        margin-top: 0;
     }
 
     .skill-item {
@@ -1821,10 +1833,33 @@
 
     .cv-item__date {
         white-space: normal;
+        color: var(--text) !important;
     }
 
     .cv-item--blue .cv-item__date {
-        color: var(--text);
+        color: var(--text) !important;
+    }
+
+    .cv-item {
+        color: var(--text) !important;
+    }
+
+    .cv-item--blue {
+        color: var(--text) !important;
+        border-color: var(--text) !important;
+    }
+
+    .about-details__cta {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        text-align: left;
+    }
+
+    .about-details__cta .material-symbols-outlined {
+        margin-left: 0;
+        margin-top: 4px;
     }
 
     .about-details__skills {
@@ -2272,6 +2307,10 @@
         display: none;
     }
 
+    .contact-details__content .hero__title {
+        margin-bottom: 0;
+    }
+
     .contact-content .contact-visual {
         width: 60%;
         max-width: 240px;
@@ -2342,6 +2381,16 @@
         margin-top: 0;
         justify-content: center;
         min-height: 100vh;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .contact-details__content .hero__title {
+        text-align: center;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .contact-details-visual {
@@ -2353,6 +2402,29 @@
         font-size: 15px;
         margin-top: 8px;
         margin-bottom: 8px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .contact-details__intro p {
+        margin: 0;
+    }
+
+    .contact-details__intro p:first-child {
+        display: inline;
+    }
+
+    .contact-details__intro p:first-child::after {
+        content: " ";
+    }
+
+    .contact-details__intro p:last-child {
+        display: block;
+        margin-top: 8px;
+    }
+
+    .contact-details__intro br {
+        display: none;
     }
 
     .contact-details__info {
