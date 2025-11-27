@@ -85,9 +85,47 @@
 			var target = document.getElementById(targetId);
 			if (!target) return;
 			
-			// If clicking on "projects" link, scroll to the top of projects panel first
-			if (targetId === 'projects') {
-				// Scroll horizontally to projects panel
+			// Disable logo click in scrolled navbar
+			var navbar = document.querySelector('.site-nav--bottom');
+			if (a.classList.contains('site-nav__logo') && navbar && navbar.classList.contains('scrolled')) {
+				return; // Don't navigate when clicking logo in scrolled navbar
+			}
+			
+			// Handle Contact and Interests - if already on that page, scroll to top of section
+			if (targetId === 'contact') {
+				var contactPanel = document.querySelector('.panel--contact');
+				if (contactPanel) {
+					var panelRect = contactPanel.getBoundingClientRect();
+					// Check if contact panel is already visible
+					if (panelRect.left >= 0 && panelRect.left < window.innerWidth) {
+						// Already on contact page - scroll to top
+						var contactContent = document.querySelector('.contact-content');
+						if (contactContent) {
+							contactContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+							return;
+						}
+					}
+				}
+				// Not on contact page yet - navigate to it
+				target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+			} else if (targetId === 'interests') {
+				var interestsPanel = document.querySelector('.panel--interests');
+				if (interestsPanel) {
+					var panelRect = interestsPanel.getBoundingClientRect();
+					// Check if interests panel is already visible
+					if (panelRect.left >= 0 && panelRect.left < window.innerWidth) {
+						// Already on interests page - scroll to top
+						var interestsContent = document.querySelector('.interests-content');
+						if (interestsContent) {
+							interestsContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+							return;
+						}
+					}
+				}
+				// Not on interests page yet - navigate to it
+				target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+			} else if (targetId === 'projects') {
+				// If clicking on "projects" link, scroll to the top of projects panel first
 				target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
 				// Then scroll to top of the projects intro section
 				setTimeout(function() {
@@ -97,7 +135,7 @@
 					}
 				}, 500);
 			} else {
-			target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+				target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
 			}
 		});
 	});

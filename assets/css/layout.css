@@ -206,19 +206,19 @@
 }
 
 .site-nav__project-label {
-    color: var(--text-muted);
+    color: var(--text);
     text-decoration: none;
     cursor: pointer;
     transition: color 0.2s ease;
 }
 
 .site-nav__project-label:hover {
-    color: var(--text);
+    color: var(--accent);
     text-decoration: none;
 }
 
 .site-nav__project-divider {
-    color: var(--text-muted);
+    color: var(--text);
 }
 
 .site-nav__project-title {
@@ -248,7 +248,7 @@
 }
 
 .site-nav__prev-project {
-    color: var(--text-muted);
+    color: var(--text);
 }
 
 .site-nav__prev-project:hover,
