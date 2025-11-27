@@ -1,25 +1,27 @@
 /* Co-Worker Project Specific Styles */
 
-/* Plugin slider images with 768x432 aspect ratio (landscape format) using img tags */
-#project-coworker .project__slide-image--plugin {
-    aspect-ratio: 768 / 432 !important;
-    width: 100% !important;
-    height: auto !important;
-    overflow: visible;
-    background: #E0E0E0;
-    border-radius: var(--radius-1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+/* Plugin slider images with 768x432 aspect ratio (landscape format) using img tags - DESKTOP ONLY */
+@media (min-width: 481px) {
+    #project-coworker .project__slide-image--plugin {
+        aspect-ratio: 768 / 432 !important;
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible;
+        background: #E0E0E0;
+        border-radius: var(--radius-1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-#project-coworker .project__slide-image--plugin img {
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    display: block;
+    #project-coworker .project__slide-image--plugin img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        display: block;
+    }
 }
 
 /* Make plugin slider slides smaller */
@@ -34,6 +36,25 @@
 
 /* Mobile Optimizations for Co-Worker Project */
 @media (max-width: 480px) {
+
+    /* Hide the original plugin slider on mobile - we use the mobile-specific one instead */
+    /* Use very specific selector to ensure it overrides everything */
+    #project-coworker .project__slider-section--plugin-format,
+    #project-coworker .project__slider-section--plugin-format .project__slider,
+    #project-coworker .project__slider-section--plugin-format .project__slider--plugin,
+    #project-coworker .project__slider-section--desktop-only {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+
+    /* Show mobile plugin slider */
+    .project__slider-section--plugin-mobile {
+        display: block !important;
+    }
 
     /* Plugin slider slides on mobile - adapt to image content */
     #project-coworker .project__slider--plugin .project__slide {
@@ -53,10 +74,10 @@
         width: calc(100% - 24px) !important;
     }
 
-    /* Plugin slider images adapt to their natural format on mobile - show completely */
+    /* Plugin slider images adapt to portrait format on mobile (432x768) - show completely */
     #project-coworker .project__slider-section--plugin-format .project__slide-image--plugin,
     #project-coworker .project__slide-image--plugin {
-        aspect-ratio: 768 / 432 !important;
+        aspect-ratio: 432 / 768 !important;
         width: 100% !important;
         height: auto !important;
         min-width: 200px;
@@ -73,10 +94,10 @@
     }
     
     /* Override the general plugin section rule on mobile */
-    /* Override general 4:3 aspect ratio rule for Co-Worker plugin slider on mobile */
+    /* Override general 4:3 aspect ratio rule for Co-Worker plugin slider on mobile - use portrait format */
     #project-coworker .project__slider-section--plugin-format .project__slide-image,
     #project-coworker .project__slider--plugin .project__slide-image {
-        aspect-ratio: 768 / 432 !important;
+        aspect-ratio: 432 / 768 !important;
         height: auto !important;
         width: 100% !important;
     }
@@ -84,10 +105,67 @@
     #project-coworker .project__slide-image--plugin img {
         width: 100% !important;
         height: auto !important;
-        aspect-ratio: 768 / 432 !important;
+        aspect-ratio: 432 / 768 !important;
         max-width: 100% !important;
         max-height: none !important;
         object-fit: contain !important;
         display: block;
+    }
+
+    /* Mobile-only plugin slider with portrait format (432x768) */
+    .project__slider-section--plugin-mobile {
+        display: block;
+        margin-top: 60px;
+        padding: 0 var(--edge-x-mobile);
+    }
+
+    .project__slider-section--plugin-mobile .project__slider-images-wrapper {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+    }
+
+    .project__slider-section--plugin-mobile .project__slide {
+        width: 100%;
+        flex-shrink: 0;
+    }
+
+    .project__slider-section--plugin-mobile .project__slide-image--plugin-mobile {
+        aspect-ratio: 432 / 768 !important;
+        width: 100% !important;
+        height: auto !important;
+        background: #E0E0E0;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin-bottom: 16px;
+    }
+
+    .project__slider-section--plugin-mobile .project__slide-image--plugin-mobile img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 432 / 768 !important;
+        object-fit: contain;
+        display: block;
+    }
+
+    .project__slider-section--plugin-mobile .project__slider-nav {
+        left: 12px;
+        right: 12px;
+        width: calc(100% - 24px);
+    }
+}
+
+/* Desktop: Hide mobile plugin slider, show original plugin slider */
+@media (min-width: 481px) {
+    .project__slider-section--plugin-mobile {
+        display: none !important;
+    }
+
+    /* Show original plugin slider on desktop */
+    #project-coworker .project__slider-section--plugin-format {
+        display: block !important;
     }
 }

@@ -499,7 +499,7 @@
     background: none;
     border: none;
     font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     color: var(--accent);
     cursor: pointer;
@@ -844,15 +844,17 @@
 }
 
 /* Plugin slider section with specific 768x432 aspect ratio (desktop only) */
-.project__slider-section--plugin .project__slide-image {
-    aspect-ratio: 768 / 432 !important;
-    width: 100% !important;
-    height: auto !important;
-}
+@media (min-width: 481px) {
+    .project__slider-section--plugin .project__slide-image {
+        aspect-ratio: 768 / 432 !important;
+        width: 100% !important;
+        height: auto !important;
+    }
 
-/* Override for Co-Worker plugin slider - use landscape format (768x432) */
-#project-coworker .project__slider-section--plugin-format .project__slide-image--plugin {
-    aspect-ratio: 768 / 432 !important;
+    /* Override for Co-Worker plugin slider - use landscape format (768x432) */
+    #project-coworker .project__slider-section--plugin-format .project__slide-image--plugin {
+        aspect-ratio: 768 / 432 !important;
+    }
 }
 
 .project__slide-title {
@@ -1481,12 +1483,12 @@
     gap: 8px;
     padding: 12px 24px;
     background: transparent;
-    border: 1px solid #D0D0D0;
+    border: 1px solid var(--accent);
     border-radius: 999px;
     font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     font-size: 14px;
     font-weight: 400;
-    color: var(--text-muted);
+    color: var(--accent);
     text-decoration: none;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1501,7 +1503,7 @@
 .contact-btn::after {
     content: "↓";
     font-size: 16px;
-    color: var(--text-muted);
+    color: var(--accent);
     transition: transform 0.2s ease, color 0.2s ease;
 }
 
@@ -1969,6 +1971,17 @@
         margin-top: -200px;
     }
 
+    /* Hide original plugin slider on mobile for Co-Worker project */
+    #project-coworker .project__slider-section--plugin-format,
+    #project-coworker .project__slider-section--desktop-only {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+
     .project__slider-section:not(:first-of-type) {
         margin-top: 60px;
     }
@@ -2050,10 +2063,25 @@
         box-sizing: border-box;
     }
 
-    /* Ensure plugin images show completely on mobile - adapt to natural image dimensions */
+    /* CRITICAL: Override 4:3 aspect ratio for Co-Worker plugin slider on mobile - use portrait format (432x768) */
+    /* This must override the general .project__slide-image rule above - highest specificity */
+    /* Target all possible combinations to ensure it works */
+    #project-coworker .project__slider-section--plugin-format .project__slider--plugin .project__slide .project__slide-image.project__slide-image--plugin,
+    #project-coworker .project__slider-section--plugin-format .project__slider--plugin .project__slide-image.project__slide-image--plugin,
+    #project-coworker .project__slider-section--plugin-format .project__slide-image.project__slide-image--plugin,
+    #project-coworker .project__slider--plugin .project__slide-image.project__slide-image--plugin,
+    #project-coworker .project__slider-section--plugin-format .project__slider--plugin .project__slide-image,
+    #project-coworker .project__slider-section--plugin-format .project__slide-image,
+    #project-coworker .project__slider--plugin .project__slide-image {
+        aspect-ratio: 432 / 768 !important;
+        height: auto !important;
+        width: 100% !important;
+    }
+
+    /* Ensure plugin images show completely on mobile - use portrait format (432x768) */
     #project-coworker .project__slider-section--plugin-format .project__slide-image--plugin,
     #project-coworker .project__slide-image--plugin {
-        aspect-ratio: 768 / 432 !important;
+        aspect-ratio: 432 / 768 !important;
         width: 100% !important;
         height: auto !important;
         min-width: 200px;
@@ -2066,24 +2094,36 @@
         flex-shrink: 0;
     }
 
-    /* Override inline styles on images to show completely */
+    /* Override inline styles on images to show completely - portrait format (432x768) */
     #project-coworker .project__slide-image--plugin img[style*="object-fit"],
-    #project-coworker .project__slide-image--plugin img {
+    #project-coworker .project__slide-image--plugin img,
+    #project-coworker .project__slider-section--plugin-format .project__slide-image--plugin img,
+    #project-coworker .project__slider--plugin .project__slide-image--plugin img {
         object-fit: contain !important;
         width: 100% !important;
         height: auto !important;
-        aspect-ratio: 768 / 432 !important;
+        aspect-ratio: 432 / 768 !important;
         max-width: 100% !important;
         max-height: none !important;
         display: block;
     }
 
+    /* Force portrait format on the container itself - override any 4:3 rules */
+    #project-coworker .project__slider-section--plugin-format .project__slide-image--plugin,
+    #project-coworker .project__slider--plugin .project__slide-image--plugin,
+    #project-coworker .project__slider-section--plugin-format .project__slide-image,
+    #project-coworker .project__slider--plugin .project__slide-image {
+        aspect-ratio: 432 / 768 !important;
+        height: auto !important;
+        width: 100% !important;
+    }
+
     /* Override the general plugin section rule on mobile for Co-Worker */
-    /* Override general 4:3 aspect ratio rule for Co-Worker plugin slider on mobile */
+    /* Override general 4:3 aspect ratio rule for Co-Worker plugin slider on mobile - use portrait format */
     #project-coworker .project__slider-section--plugin-format .project__slide-image,
     #project-coworker .project__slider--plugin .project__slide-image,
     #project-coworker .project__slider-section--plugin-format .project__slide-image--plugin .project__slide-image {
-        aspect-ratio: 768 / 432 !important;
+        aspect-ratio: 432 / 768 !important;
         height: auto !important;
         width: 100% !important;
     }
