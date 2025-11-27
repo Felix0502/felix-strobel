@@ -174,6 +174,22 @@
 
 	panels.forEach(function (panel) { io.observe(panel); });
 
+	// Ensure page always starts at the beginning of start section
+	document.addEventListener('DOMContentLoaded', function () {
+		var rail = document.getElementById('rail');
+		var startPanel = document.getElementById('start');
+		
+		// Reset horizontal scroll position to start
+		if (rail) {
+			rail.scrollLeft = 0;
+		}
+		
+		// Reset any vertical scroll position in start panel
+		if (startPanel) {
+			startPanel.scrollTop = 0;
+		}
+	});
+
 	// Ensure initial state is correct on load (respect deep links)
 	window.addEventListener('load', function () {
 		var hash = window.location.hash.replace('#', '');
@@ -184,11 +200,32 @@
 		getLinkForId(targetId)?.setAttribute('aria-current', 'page');
 		target.focus({ preventScroll: true });
 
+		// Always reset scroll positions to start at the beginning
+		var rail = document.getElementById('rail');
+		var startPanel = document.getElementById('start');
+		
+		// Reset horizontal scroll position to start
+		if (rail) {
+			rail.scrollLeft = 0;
+		}
+		
+		// Reset any vertical scroll position in start panel
+		if (startPanel) {
+			startPanel.scrollTop = 0;
+		}
+
 		// If a hash was provided (e.g., returning from mobile project detail),
 		// immediately scroll to that panel so the user lands in the expected section.
 		if (hash && hash !== 'start') {
 			setTimeout(function () {
 				target.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'start' });
+			}, 50);
+		} else {
+			// Always scroll to start section at the beginning
+			setTimeout(function () {
+				if (startPanel) {
+					startPanel.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'start' });
+				}
 			}, 50);
 		}
 	});
