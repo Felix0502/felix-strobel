@@ -1314,6 +1314,7 @@
         width: 100%;
         aspect-ratio: 1;
         border: none;
+        max-width: 100%;
     }
 
     .project-thumbnail-btn {
@@ -1888,6 +1889,10 @@
     .project-thumbnails {
         grid-template-columns: 1fr;
         gap: 32px;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
     }
 
     .projects-overview {
@@ -1914,6 +1919,7 @@
         padding-bottom: 16px;
         border-bottom: 0.5px solid var(--text);
         margin-bottom: 16px;
+        width: 100%;
     }
 
 
