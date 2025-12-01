@@ -1,25 +1,26 @@
 /* Co-Worker Project Specific Styles */
 
-/* Plugin slider images with 768x432 aspect ratio (landscape format) using img tags - DESKTOP ONLY */
+/* Plugin slider images with 432x768 aspect ratio (portrait format) using img tags - DESKTOP ONLY */
 @media (min-width: 481px) {
 #project-coworker .project__slide-image--plugin {
-    aspect-ratio: 768 / 432 !important;
+    aspect-ratio: 432 / 768 !important;
     width: 100% !important;
     height: auto !important;
-    overflow: visible;
-    background: #E0E0E0;
+    overflow: hidden !important;
+    background: transparent;
     border-radius: var(--radius-1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
+    min-height: 0;
+    position: relative;
 }
 
 #project-coworker .project__slide-image--plugin img {
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
     display: block;
     }
 }

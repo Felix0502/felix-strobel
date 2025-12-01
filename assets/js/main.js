@@ -91,6 +91,29 @@
 				return; // Don't navigate when clicking logo in scrolled navbar
 			}
 			
+			// Reset scroll position BEFORE navigating to prevent Safari from starting at bottom
+			if (targetId === 'projects') {
+				var projectsPanel = document.querySelector('.panel--projects');
+				if (projectsPanel) {
+					projectsPanel.scrollTop = 0;
+				}
+			} else if (targetId === 'about') {
+				var aboutPanel = document.querySelector('.panel--about');
+				if (aboutPanel) {
+					aboutPanel.scrollTop = 0;
+				}
+			} else if (targetId === 'interests') {
+				var interestsPanel = document.querySelector('.panel--interests');
+				if (interestsPanel) {
+					interestsPanel.scrollTop = 0;
+				}
+			} else if (targetId === 'contact') {
+				var contactPanel = document.querySelector('.panel--contact');
+				if (contactPanel) {
+					contactPanel.scrollTop = 0;
+				}
+			}
+			
 			// Handle Contact and Interests - if already on that page, scroll to top of section
 			if (targetId === 'contact') {
 				var contactPanel = document.querySelector('.panel--contact');
@@ -125,7 +148,7 @@
 				// Not on interests page yet - navigate to it
 				target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
 			} else if (targetId === 'projects') {
-				// If clicking on "projects" link, scroll to the top of projects panel first
+			// If clicking on "projects" link, scroll to the top of projects panel first
 				target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
 				// Then scroll to top of the projects intro section
 				setTimeout(function() {
@@ -133,9 +156,9 @@
 					if (projectsIntro) {
 						projectsIntro.scrollIntoView({ behavior: 'smooth', block: 'start' });
 					}
-				}, 500);
+				}, 100);
 			} else {
-				target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+			target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
 			}
 		});
 	});
@@ -146,7 +169,12 @@
 		projectLabel.addEventListener('click', function(e) {
 			e.preventDefault();
 			var projectsPanel = document.getElementById('projects');
+			var projectsPanelElement = document.querySelector('.panel--projects');
 			if (projectsPanel) {
+				// Reset scroll position BEFORE navigating
+				if (projectsPanelElement) {
+					projectsPanelElement.scrollTop = 0;
+				}
 				// Scroll horizontally to projects panel
 				projectsPanel.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
 				// Then scroll to top of the projects intro section
@@ -155,7 +183,7 @@
 					if (projectsIntro) {
 						projectsIntro.scrollIntoView({ behavior: 'smooth', block: 'start' });
 					}
-				}, 500);
+				}, 100);
 			}
 		});
 	}
@@ -165,8 +193,20 @@
 		heroArrow.addEventListener('click', function (e) {
 			e.preventDefault();
 			var projectsPanel = document.getElementById('projects');
+			var projectsPanelElement = document.querySelector('.panel--projects');
 			if (projectsPanel) {
+				// Reset scroll position BEFORE navigating
+				if (projectsPanelElement) {
+					projectsPanelElement.scrollTop = 0;
+				}
 				projectsPanel.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+				// Then scroll to top of the projects intro section
+				setTimeout(function() {
+					var projectsIntro = document.querySelector('.projects-intro');
+					if (projectsIntro) {
+						projectsIntro.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					}
+				}, 100);
 			}
 		});
 	}
@@ -178,6 +218,31 @@
 			if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
 				var id = entry.target.id;
 				if (!id || id === activeId) return;
+				// Reset scroll position immediately when switching to a new panel (Safari fix)
+				// Use requestAnimationFrame to ensure it happens immediately
+				requestAnimationFrame(function() {
+					if (id === 'projects') {
+						var projectsPanel = document.querySelector('.panel--projects');
+						if (projectsPanel) {
+							projectsPanel.scrollTop = 0;
+						}
+					} else if (id === 'about') {
+						var aboutPanel = document.querySelector('.panel--about');
+						if (aboutPanel) {
+							aboutPanel.scrollTop = 0;
+						}
+					} else if (id === 'interests') {
+						var interestsPanel = document.querySelector('.panel--interests');
+						if (interestsPanel) {
+							interestsPanel.scrollTop = 0;
+						}
+					} else if (id === 'contact') {
+						var contactPanel = document.querySelector('.panel--contact');
+						if (contactPanel) {
+							contactPanel.scrollTop = 0;
+						}
+					}
+				});
 				activeId = id;
 
 				// Update aria-current on links

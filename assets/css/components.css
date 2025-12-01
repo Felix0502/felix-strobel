@@ -247,9 +247,12 @@
 
 .project-thumbnails {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, calc((100vw - 160px - 96px) / 5));
     gap: 24px;
-    width: 100%;
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .project-thumbnail-wrapper {
@@ -851,9 +854,24 @@
         height: auto !important;
     }
 
-    /* Override for Co-Worker plugin slider - use landscape format (768x432) */
+    /* Override for Co-Worker plugin slider - use portrait format (432x768) */
     #project-coworker .project__slider-section--plugin-format .project__slide-image--plugin {
-        aspect-ratio: 768 / 432 !important;
+        aspect-ratio: 432 / 768 !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
+        background: transparent !important;
+    }
+    
+    /* Safari fix: Ensure images are fully visible in Co-Worker plugin slider - portrait format */
+    #project-coworker .project__slider-section--plugin-format .project__slide-image--plugin img,
+    #project-coworker .project__slider--plugin .project__slide-image--plugin img {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        display: block !important;
     }
 }
 
@@ -2905,4 +2923,14 @@
         color: var(--text);
         text-decoration: none;
     }
+}
+
+/* Hide AI Agents project on mobile and desktop (not deleted, can be re-enabled later) */
+.project-thumbnail-wrapper:has(button[data-project-slug="ai-agents"]),
+.project-thumbnail-wrapper:has(.project-thumbnail-info[data-project-slug="ai-agents"]) {
+    display: none !important;
+}
+
+#project-3 {
+    display: none !important;
 }
