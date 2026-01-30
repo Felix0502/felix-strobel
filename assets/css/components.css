@@ -247,7 +247,7 @@
 
 .project-thumbnails {
     display: grid;
-    grid-template-columns: repeat(4, calc((100vw - 160px - 96px) / 5));
+    grid-template-columns: repeat(5, calc((100vw - 160px - 96px) / 5));
     gap: 24px;
     width: fit-content;
     max-width: 100%;
@@ -270,7 +270,7 @@
     width: 100%;
     cursor: pointer;
     padding-bottom: 14px;
-    border-bottom: 0.5px solid var(--text-muted);
+    border-bottom: 0.5px solid #E0E0E0;
     margin-top: 14px;
     transition: border-color 0.2s ease;
 }
@@ -1917,7 +1917,7 @@
         align-items: stretch;
         gap: 16px;
         padding-bottom: 16px;
-        border-bottom: 0.5px solid var(--text);
+        border-bottom: 0.5px solid #E0E0E0;
         margin-bottom: 16px;
         width: 100%;
     }
@@ -2929,14 +2929,4 @@
         color: var(--text);
         text-decoration: none;
     }
-}
-
-/* Hide AI Agents project on mobile and desktop (not deleted, can be re-enabled later) */
-.project-thumbnail-wrapper:has(button[data-project-slug="ai-agents"]),
-.project-thumbnail-wrapper:has(.project-thumbnail-info[data-project-slug="ai-agents"]) {
-    display: none !important;
-}
-
-#project-3 {
-    display: none !important;
 }
