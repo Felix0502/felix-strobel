@@ -300,6 +300,11 @@
     color: var(--accent);
 }
 
+.project-thumbnail-wrapper:has(button[data-project-slug="momox"]),
+.project-thumbnail-wrapper:has(.project-thumbnail-info[data-project-slug="momox"]) {
+    display: none !important;
+}
+
 .project-thumbnail-title {
     font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     font-size: 16px;
@@ -751,6 +756,11 @@
     margin: 0;
 }
 
+.project__body-lead {
+    grid-column: 1 / -1;
+    margin-bottom: 1em;
+}
+
 /* Project Meta (right 20%) */
 .project__meta-sidebar {
     display: flex;
@@ -861,7 +871,7 @@
         overflow: hidden !important;
         background: transparent !important;
     }
-    
+
     /* Safari fix: Ensure images are fully visible in Co-Worker plugin slider - portrait format */
     #project-coworker .project__slider-section--plugin-format .project__slide-image--plugin img,
     #project-coworker .project__slider--plugin .project__slide-image--plugin img {
